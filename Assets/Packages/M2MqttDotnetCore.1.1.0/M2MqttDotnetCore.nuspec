@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>M2MqttDotnetCore</id>
+    <version>1.1.0</version>
+    <title>M2Mqtt Dotnet Core</title>
+    <authors>Hamidreza Mohaqeq</authors>
+    <owners>Hamidreza Mohaqeq</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/mohaqeq/paho.mqtt.m2mqtt/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/mohaqeq/paho.mqtt.m2mqtt</projectUrl>
+    <iconUrl>https://github.com/mohaqeq/paho.mqtt.m2mqtt/raw/master/images/m2m.png</iconUrl>
+    <description>MQTT client based on M2Mqtt 4.3.0 for .NETCORE 3.1</description>
+    <summary>MQTT client based on M2Mqtt 4.3.0 for .NETCORE 3.1</summary>
+    <releaseNotes>Add ALPN support (https://tools.ietf.org/html/rfc7301)
+Remove SSL3 support (https://go.microsoft.com/fwlink/?linkid=14202)</releaseNotes>
+    <tags>mqtt dotnetcore dotnet core m2m micro standard client</tags>
+    <dependencies>
+      <dependency id="System.Net.NameResolution" version="4.3.0" />
+      <dependency id="System.Threading.Thread" version="4.3.0" />
+      <dependency id="System.Collections.NonGeneric" version="4.3.0" />
+      <dependency id="NETStandard.Library" version="2.0.0" />
+      <dependency id="System.Net.Security" version="4.3.2" />
+      <dependency id="System.Security.Cryptography.X509Certificates" version="4.3.2" />
+    </dependencies>
+  </metadata>
+</package>
