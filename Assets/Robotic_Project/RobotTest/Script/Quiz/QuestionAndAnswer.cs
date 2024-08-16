@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.serializable]
+[System.Serializable]
 public class QuestionAndAnswer : MonoBehaviour
 {
     public string Question;

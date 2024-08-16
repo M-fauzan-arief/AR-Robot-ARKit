@@ -1,14 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class QuizManager: MonoBehaviour
 {
     public List <QuestionAndAnswer> QnA;
-    public gameobject[] options;
+    public GameObject[] options;
     public int currentQuestion;
 
-    public Text QuestionTxt;
+    public TMP_Text QuestionTxt;
 
     private void Start(){
         generateQuestion();
@@ -20,12 +22,12 @@ public class QuizManager: MonoBehaviour
     }
 
     void SetAnswers(){
-        for (int = 0; i < options.Length; i++){
+        for (int i = 0; i < options.Length; i++){
             options[i].GetComponent<AnswerScript>().isCorrect = false;
-            options[i].transform.GetChild(0).GetComponent<Text>() = QnA[currentQuestion].Answer[i];
+            options[i].transform.GetChild(0).GetComponent<Text>().text = QnA[currentQuestion].Answer[i];
 
             if(QnA[currentQuestion].correctAnswer == i+1){
-                options[i]..GetComponent<AnswerScript>().isCorrect = true;
+                options[i].GetComponent<AnswerScript>().isCorrect = true;
             }
 
         }

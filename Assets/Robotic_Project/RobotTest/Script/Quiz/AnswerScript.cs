@@ -5,7 +5,7 @@ using UnityEngine;
 public class AnswerScript : MonoBehaviour
 {
     public bool isCorrect = false;
-    public QuizManager;
+    public QuizManager QuizManager;
 
     public void Answer(){
         if(isCorrect)
@@ -15,6 +15,7 @@ public class AnswerScript : MonoBehaviour
         }else
         {
             Debug.Log("Wrong Answer");
+            QuizManager.correct();
         }
     }
     
