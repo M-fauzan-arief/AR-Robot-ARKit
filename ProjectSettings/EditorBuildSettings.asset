@@ -26,6 +26,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Robotic_Project/RobotTest/Scene/AR Lesson/Controller/ARSceneDobot.unity
     guid: c1e0f7043c7fee24eb5d39a27e7255fd
+  - enabled: 1
+    path: Assets/Robotic_Project/RobotTest/Scene/AR Lesson/Visual Code/ARCodeDobot.unity
+    guid: 227527392b4c0fb4ab2a69bc2f78acaf
   m_configObjects:
     EasyAR.Settings: {fileID: 11400000, guid: 0f20129de4c3ab540a31fb56717becaf, type: 2}
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: fabdafd5b3bed43ccb8bb7f44e35d38a, type: 2}

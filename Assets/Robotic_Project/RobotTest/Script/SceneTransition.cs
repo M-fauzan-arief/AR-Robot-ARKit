@@ -46,6 +46,13 @@ public class SceneTransition : MonoBehaviour
         SceneManager.LoadScene("ARSceneAPIRO");
         Debug.Log("Scene Transition to Apiro");
     }
+    public void ARCodeDobot()
+    {
+        SceneManager.LoadScene("ARCodeDobot");
+        Debug.Log("Scene Transition to Dobot Visual Code");
+    }
+
+
 
     public void ApiroSelect()
     {
