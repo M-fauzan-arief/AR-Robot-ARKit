@@ -53,7 +53,6 @@ public class SceneTransition : MonoBehaviour
     }
 
 
-
     public void ApiroSelect()
     {
         SceneManager.LoadScene("ApiroSelect");
@@ -74,6 +73,11 @@ public class SceneTransition : MonoBehaviour
     {
         Application.Quit();
         Debug.Log("Application is quit");
+    }
+
+    public void DobotScan(){
+        SceneManager.LoadScene("Dobot-ARKIT");
+        Debug.Log("Dobot Scanner is loaded");
     }
 
 

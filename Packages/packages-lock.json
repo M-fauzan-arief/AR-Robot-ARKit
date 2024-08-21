@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.easyar.sense": {
-      "version": "file:D:/Download/EasyARSenseUnityPlugin_4.6.3+3029.cb846598/com.easyar.sense-4.6.3+3029.cb846598.tgz",
+      "version": "file:/Users/fauzanarif/Downloads/EasyARSenseUnityPlugin_4/com.easyar.sense-4.6.3+3029.cb846598.tgz",
       "depth": 0,
       "source": "local-tarball",
       "dependencies": {
