@@ -79714,7 +79714,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 144844007d8040a43aefc87826c5ef9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreText: {fileID: 0}
+  scoreText: {fileID: 472744743}
   starText: {fileID: 0}
   ScoreCanvas: {fileID: 0}
   totalObjects: 3
