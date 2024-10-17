@@ -4,24 +4,24 @@ using UnityEngine.EventSystems;
 using System.Collections;
 
 [System.Serializable]
-public class EndEffector
+public class EndEffectorDobot // Renamed class
 {
     public string type;
     public string enable;
 }
 
 [System.Serializable]
-public class Data
+public class DataDobot // Renamed class
 {
     public string j1, j2, j3, j4, status;
-    public EndEffector endEffector;
+    public EndEffectorDobot endEffector; // Updated reference to the renamed class
 }
 
 [System.Serializable]
 public class RobotMessage
 {
     public string nodeID, moveType;
-    public Data data;
+    public DataDobot data; // Updated reference to the renamed class
     public long unixtime;
 }
 
@@ -134,8 +134,8 @@ public class Arm_Controller : MonoBehaviour
             return;
         }
 
-        var endEffector = new EndEffector { type = "suck", enable = endEffectorEnabled.ToString() };
-        var data = new Data { j1 = J1YRot.ToString(), j2 = J2YRot.ToString(), j3 = J3YRot.ToString(), j4 = J4YRot.ToString(), status = "True", endEffector = endEffector };
+        var endEffector = new EndEffectorDobot { type = "suck", enable = endEffectorEnabled.ToString() }; // Updated reference
+        var data = new DataDobot { j1 = J1YRot.ToString(), j2 = J2YRot.ToString(), j3 = J3YRot.ToString(), j4 = J4YRot.ToString(), status = "True", endEffector = endEffector }; // Updated reference
         var robotMessage = new RobotMessage { nodeID = "dobot-l-01", moveType = "joint", data = data, unixtime = GetUnixTimestamp() };
 
         mqttClient.PublishJointValues(robotMessage);
