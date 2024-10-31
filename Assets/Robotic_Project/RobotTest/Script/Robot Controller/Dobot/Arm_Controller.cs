@@ -128,19 +128,42 @@ public class Arm_Controller : MonoBehaviour
             return;
         }
 
+        // Check for duplicate joint values to avoid redundant messages
         if (lastJ1YRot == J1YRot && lastJ2YRot == J2YRot && lastJ3YRot == J3YRot && lastJ4YRot == J4YRot)
         {
             Debug.Log("Duplicate joint values detected. Skipping message.");
             return;
         }
 
-        var endEffector = new EndEffectorDobot { type = "suck", enable = endEffectorEnabled.ToString() }; // Updated reference
-        var data = new DataDobot { j1 = J1YRot.ToString(), j2 = J2YRot.ToString(), j3 = J3YRot.ToString(), j4 = J4YRot.ToString(), status = "True", endEffector = endEffector }; // Updated reference
-        var robotMessage = new RobotMessage { nodeID = "dobot-l-01", moveType = "joint", data = data, unixtime = GetUnixTimestamp() };
+        // Invert endEffectorEnabled for correct MQTT message
+        var endEffector = new EndEffectorDobot
+        {
+            type = "suck",
+            enable = (!endEffectorEnabled).ToString() // Invert the enable state
+        };
+
+        var data = new DataDobot
+        {
+            j1 = J1YRot.ToString(),
+            j2 = J2YRot.ToString(),
+            j3 = J3YRot.ToString(),
+            j4 = J4YRot.ToString(),
+            status = "True",
+            endEffector = endEffector
+        };
+
+        var robotMessage = new RobotMessage
+        {
+            nodeID = "dobot-l-01",
+            moveType = "joint",
+            data = data,
+            unixtime = GetUnixTimestamp()
+        };
 
         mqttClient.PublishJointValues(robotMessage);
         UpdateLastJointValues();
     }
+
 
     private long GetUnixTimestamp() => (long)(System.DateTime.UtcNow - new System.DateTime(1970, 1, 1).ToUniversalTime()).TotalSeconds;
 

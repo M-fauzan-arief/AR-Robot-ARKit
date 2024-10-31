@@ -2800,7 +2800,6 @@ Transform:
   - {fileID: 513599074}
   - {fileID: 1416824062}
   - {fileID: 1756614581}
-  - {fileID: 8169544993643609510}
   - {fileID: 4758729995527048}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5417,7 +5416,8 @@ Transform:
   m_LocalPosition: {x: 0.36151588, y: 2.929, z: -3.6715214}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8169544993643609510}
   m_Father: {fileID: 985390300}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!114 &4758729995527049
@@ -5961,11 +5961,18 @@ MonoBehaviour:
   J2: {fileID: 2075291435}
   J3: {fileID: 7943634489972934531}
   J4: {fileID: 6488714937390435247}
-  EF: {fileID: 3841170297572691335}
   J1_TurnRate: 1
   J2_TurnRate: 1
   J3_TurnRate: 1
   J4_TurnRate: 1
+  J1YRotMin: -135
+  J1YRotMax: 135
+  J2YRotMin: -8
+  J2YRotMax: 80
+  J3YRotMin: -7
+  J3YRotMax: 61
+  J4YRotMin: -145
+  J4YRotMax: 145
   J1_PlusButton: {fileID: 1772674667}
   J1_MinusButton: {fileID: 635012932}
   J2_PlusButton: {fileID: 639826200}
@@ -5976,9 +5983,10 @@ MonoBehaviour:
   J4_MinusButton: {fileID: 28379136}
   resetButton: {fileID: 1844063124}
   resetDuration: 2
-  dataSendingInterval: 0.5
-  target: {fileID: 27890335}
-  IKThreshold: 1
+  J1YRot: 0
+  J2YRot: 0
+  J3YRot: 0
+  J4YRot: 0
 --- !u!1 &2704606633625088880
 GameObject:
   m_ObjectHideFlags: 0
@@ -7487,9 +7495,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3628554186915344416}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0046819146, y: -0, z: -0, w: 0.99998903}
-  m_LocalPosition: {x: 0.35721588, y: 2.9311, z: -3.6711214}
-  m_LocalScale: {x: 0.0037549173, y: 0.00375492, z: 0.00375492}
+  m_LocalRotation: {x: -0.7104097, y: -0, z: -0, w: 0.70378846}
+  m_LocalPosition: {x: -0.042999983, y: 0.0040006614, z: -0.02099991}
+  m_LocalScale: {x: 0.03754917, y: 0.03754919, z: 0.03754919}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3879471020541640187}
@@ -7497,7 +7505,7 @@ Transform:
   - {fileID: 860521277}
   - {fileID: 52866796}
   - {fileID: 27890335}
-  m_Father: {fileID: 985390300}
+  m_Father: {fileID: 4758729995527048}
   m_LocalEulerAnglesHint: {x: -90.537, y: 0, z: 0}
 --- !u!23 &8284069475064709122
 MeshRenderer:

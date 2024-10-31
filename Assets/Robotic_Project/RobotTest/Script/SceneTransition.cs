@@ -98,4 +98,10 @@ public class SceneTransition : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+
+
+    public void ARCodeAPIRO()
+    {
+        SceneManager.LoadScene("ARCodeAPIRO");
+    }
 }
