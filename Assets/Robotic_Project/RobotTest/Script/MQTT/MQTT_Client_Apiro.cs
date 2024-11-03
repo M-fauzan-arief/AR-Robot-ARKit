@@ -54,7 +54,7 @@ namespace apirorobotmessage  // Update to your project namespace
 
         public bool IsConnected()
         {
-            return client.IsConnected;
+            return client != null && client.IsConnected;
         }
 
         public void PublishJointValues(RobotMessageApiro robotMessageApiro)
@@ -68,6 +68,29 @@ namespace apirorobotmessage  // Update to your project namespace
                     client.Publish(topic, Encoding.UTF8.GetBytes(message), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
                     lastPublishTime = Time.time; // Update last published time
                     Debug.Log("Message published: " + message);
+                }
+                else
+                {
+                    Debug.LogWarning("Publish skipped due to cooldown.");
+                }
+            }
+            else
+            {
+                Debug.LogError("MQTT client is not connected. Cannot publish message.");
+            }
+        }
+
+        // Fixed PublishJointValues method with jsonMessage as a string
+        internal void PublishJointValues(string jsonMessage)
+        {
+            if (client.IsConnected)
+            {
+                if (Time.time - lastPublishTime >= publishCooldown)
+                {
+                    string topic = "/robot/Apiro/jointValues";
+                    client.Publish(topic, Encoding.UTF8.GetBytes(jsonMessage), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
+                    lastPublishTime = Time.time; // Update last published time
+                    Debug.Log("Message published: " + jsonMessage);
                 }
                 else
                 {
