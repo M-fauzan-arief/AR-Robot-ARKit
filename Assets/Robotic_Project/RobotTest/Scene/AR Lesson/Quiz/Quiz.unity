@@ -1125,7 +1125,7 @@ MonoBehaviour:
     - A robotic arm for learning about robotics and engineering
     - A device for playing games
     - A calculator for math problems
-    correctAnswer: 1
+    CorrectAnswerIndex: 1
   - Question: Which of the following best describes the role of the Dobot Magician
       Lite in a STEAM learning environment?
     Answers:
@@ -1133,7 +1133,7 @@ MonoBehaviour:
     - A robotic arm for learning about robotics and engineering
     - A device for playing games
     - A calculator for math problems
-    correctAnswer: 1
+    CorrectAnswerIndex: 1
   - Question: In the AR application, why is precision important when using the Dobot
       Magician Lite to move objects?
     Answers:
@@ -1141,7 +1141,7 @@ MonoBehaviour:
     - To develop accuracy and problem-solving skills
     - To save time
     - o keep the robot entertained
-    correctAnswer: 1
+    CorrectAnswerIndex: 1
   - Question: Which STEAM subject is primarily involved when programming the movements
       of the Dobot Magician Lite?
     Answers:
@@ -1149,7 +1149,7 @@ MonoBehaviour:
     - Engineering
     - Literature
     - Music
-    correctAnswer: 1
+    CorrectAnswerIndex: 1
   - Question: How can learning to control the Dobot Magician Lite help students understand
       mathematical concepts?
     Answers:
@@ -1157,7 +1157,7 @@ MonoBehaviour:
     - By writing essays
     - By singing songs
     - By understanding angles and measurements
-    correctAnswer: 4
+    CorrectAnswerIndex: 3
   options:
   - {fileID: 2069711317}
   - {fileID: 1638315328}

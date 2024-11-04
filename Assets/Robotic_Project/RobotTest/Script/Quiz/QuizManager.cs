@@ -6,6 +6,14 @@ using TMPro;
 
 public class QuizManager : MonoBehaviour
 {
+    [System.Serializable]
+    public class QuestionAndAnswer
+    {
+        public string Question;
+        public List<string> Answers;
+        public int CorrectAnswerIndex;
+    }
+
     public List<QuestionAndAnswer> QnA;
     public GameObject[] options;
     public int currentQuestion;
@@ -17,22 +25,53 @@ public class QuizManager : MonoBehaviour
 
     private void Start()
     {
-        generateQuestion();
+        if (QnA == null || QnA.Count == 0)
+        {
+            Debug.LogError("No questions available in QnA list.");
+            return;
+        }
+
+        InitializeOptions();
+        GenerateQuestion();
         UpdateScoreText();
     }
 
-    public void correct()
+    void InitializeOptions()
+    {
+        // Attach button listeners to each option once at the start
+        for (int i = 0; i < options.Length; i++)
+        {
+            int index = i; // Local variable to avoid closure issues in loop
+            options[i].GetComponent<Button>().onClick.AddListener(() => OnOptionSelected(index));
+        }
+    }
+
+    void OnOptionSelected(int index)
+    {
+        if (index == QnA[currentQuestion].CorrectAnswerIndex)
+        {
+            CorrectAnswer();
+        }
+        else
+        {
+            WrongAnswer();
+        }
+    }
+
+    public void CorrectAnswer()
     {
         score++; // Increment the score when the answer is correct
+        Debug.Log("Correct answer selected!");
         QnA.RemoveAt(currentQuestion);
-        generateQuestion();
+        GenerateQuestion();
         UpdateScoreText(); // Update the score display
     }
 
-    public void wrong()
+    public void WrongAnswer()
     {
+        Debug.Log("Wrong answer selected!");
         QnA.RemoveAt(currentQuestion);
-        generateQuestion();
+        GenerateQuestion();
     }
 
     void SetAnswers()
@@ -45,13 +84,6 @@ public class QuizManager : MonoBehaviour
                 continue;
             }
 
-            var answerScript = options[i].GetComponent<AnswerScript>();
-            if (answerScript == null)
-            {
-                Debug.LogError($"options[{i}] does not have an AnswerScript component");
-                continue;
-            }
-
             var textComponent = options[i].transform.GetChild(0).GetComponent<TMP_Text>();
             if (textComponent == null)
             {
@@ -61,13 +93,10 @@ public class QuizManager : MonoBehaviour
 
             // Set the text of the answer option
             textComponent.text = QnA[currentQuestion].Answers[i];
-
-            // Set whether this option is the correct answer
-            answerScript.isCorrect = (QnA[currentQuestion].correctAnswer == i);
         }
     }
 
-    void generateQuestion()
+    void GenerateQuestion()
     {
         if (QnA.Count > 0)
         {
@@ -78,6 +107,7 @@ public class QuizManager : MonoBehaviour
         else
         {
             Debug.Log("No more questions available!");
+            // Optionally, display final score or end the quiz
         }
     }
 

@@ -148,7 +148,20 @@ PlayerSettings:
   visionOSBundleVersion: 1.0
   tvOSBundleVersion: 1.0
   bundleVersion: 0.1
-  preloadedAssets: []
+  preloadedAssets:
+  - {fileID: 11400000, guid: c8f1d14bdc9a545409c5654eed994cd3, type: 2}
+  - {fileID: 944512052601532238, guid: f86d608ee83544fbd8034f485a4a42b1, type: 2}
+  - {fileID: 11400000, guid: 6af9abf18d3554165825216bcf011800, type: 2}
+  - {fileID: -555363133409841218, guid: 80033f0040d2a4c8393cebe36c382ec4, type: 2}
+  - {fileID: 4800000, guid: e7c77f6eaab324a819efdc13b8125a39, type: 3}
+  - {fileID: 4800000, guid: 6743a50a812740be8c0aa3fccc46fae9, type: 3}
+  - {fileID: 4800000, guid: ea9a295053a0dc440b9698a7f41d9741, type: 3}
+  - {fileID: 4800000, guid: 1499e61b3897c4a4b9318a56ca931b8a, type: 3}
+  - {fileID: 4800000, guid: 798d6e253a35a144d94205b80c8fd48b, type: 3}
+  - {fileID: 4800000, guid: ae539cb2b258bd047a57837fd579cc80, type: 3}
+  - {fileID: 4800000, guid: 58841e6e22debfc43ba09a0cf58cd92d, type: 3}
+  - {fileID: 4800000, guid: a336f422ffebbec4c89b4dac26022d5f, type: 3}
+  - {fileID: 11400000, guid: 0f20129de4c3ab540a31fb56717becaf, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -171,7 +184,7 @@ PlayerSettings:
   applicationIdentifier:
     Android: com.HCM.HCMRobotController
     Standalone: com.DefaultCompany.Robotic-AR-EasyAR
-    iPhone: com.HCM.Robot-Controller-HCM
+    iPhone: HCMRobotController
   buildNumber:
     Standalone: 0
     VisionOS: 0

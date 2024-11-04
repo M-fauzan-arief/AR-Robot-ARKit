@@ -100,6 +100,13 @@ public class SceneTransition : MonoBehaviour
     }
 
 
+    public void Quiz()
+    {
+        SceneManager.LoadScene("Quiz");
+        Debug.Log("Quiz is loaded");
+    }
+
+
     public void ARCodeAPIRO()
     {
         SceneManager.LoadScene("ARCodeAPIRO");
