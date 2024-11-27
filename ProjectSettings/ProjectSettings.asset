@@ -171,6 +171,7 @@ PlayerSettings:
   applicationIdentifier:
     Android: com.HCM.HCMRobotController
     Standalone: com.DefaultCompany.Robotic-AR-EasyAR
+    iPhone: HCMRobotController
   buildNumber:
     Standalone: 0
     VisionOS: 0
@@ -245,7 +246,7 @@ PlayerSettings:
   metalCompileShaderBinary: 0
   iOSRenderExtraFrameOnPause: 0
   iosCopyPluginsCodeInsteadOfSymlink: 0
-  appleDeveloperTeamID: 
+  appleDeveloperTeamID: fauzanaaa750
   iOSManualSigningProvisioningProfileID: 
   tvOSManualSigningProvisioningProfileID: 
   VisionOSManualSigningProvisioningProfileID: 
