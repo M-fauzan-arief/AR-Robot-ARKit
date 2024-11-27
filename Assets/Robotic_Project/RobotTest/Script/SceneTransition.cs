@@ -102,7 +102,7 @@ public class SceneTransition : MonoBehaviour
 
     public void Quiz()
     {
-        SceneManager.LoadScene("Quiz");
+        SceneManager.LoadScene("Robot_Quiz");
         Debug.Log("Quiz is loaded");
     }
 

@@ -32,6 +32,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Robotic_Project/RobotTest/Scene/AR Lesson/Visual Code/ARCodeAPIRO.unity
     guid: 615dd7a6dc8b9164898fa0e860e20a1b
+  - enabled: 1
+    path: Assets/Robotic_Project/RobotTest/Scene/AR Lesson/Quiz/Scenes/Robot_Quiz.unity
+    guid: 196a95089bc3bae429fe401d2cb191a2
   m_configObjects:
     EasyAR.Settings: {fileID: 11400000, guid: 0f20129de4c3ab540a31fb56717becaf, type: 2}
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: fabdafd5b3bed43ccb8bb7f44e35d38a, type: 2}

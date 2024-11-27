@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7427205915262178067
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7427205915262178064}
+  - component: {fileID: 7427205915262178065}
+  m_Layer: 0
+  m_Name: QuizSystemHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7427205915262178064
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7427205915262178067}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7427205915262178065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7427205915262178067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6338ce36c6441ba459039c82af3a2a42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _quizLoadMode: 2
+  _sceneLoadMode: 1
+  _quizScene: {fileID: 102900000, guid: b587be5b676ea334a8cd28a582a93910, type: 3}
+  _quizPrefab: {fileID: 3986322896347171460, guid: ac5748b8a3d993a438e8f7f241cc93b1,
+    type: 3}
+  _quizResultPrefab: {fileID: 2810126683341524269, guid: 4a2bbb5d4578bf548ab7e942ead54fb1,
+    type: 3}
+  _quizDataRef: {fileID: 11400000, guid: 533cb31e4fdf5d64ba17a69a728b9d6c, type: 2}
+  _currentQuizManager: {fileID: 0}
+  _currentQuizResultPanel: {fileID: 0}
+  _openQuizAutomatically: {fileID: 11400000, guid: 4ede416819db8404ab54ef04f7ec7fe9,
+    type: 2}

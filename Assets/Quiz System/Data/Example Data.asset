@@ -1,0 +1,113 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c49667146d4a9e46ae4f20a5dc25781, type: 3}
+  m_Name: Example Data
+  m_EditorClassIdentifier: 
+  questions:
+  - questionType: 0
+    questionText: What is the capital city of Tunisia?
+    questionImage: {fileID: 0}
+    answerType: 0
+    textAnswer:
+      answers:
+      - isCorrect: 0
+        answerValue: New York
+      - isCorrect: 0
+        answerValue: Tokyo
+      - isCorrect: 1
+        answerValue: Tunis
+      - isCorrect: 0
+        answerValue: Berlin
+    imageAnswer:
+      answers: []
+    hasTime: 0
+    questionTimerData:
+      timerType: 0
+      timerValue: 0
+  - questionType: 0
+    questionText: Which continent is known as the "Land of the Rising Sun"?
+    questionImage: {fileID: 0}
+    answerType: 0
+    textAnswer:
+      answers:
+      - isCorrect: 0
+        answerValue: Africa
+      - isCorrect: 1
+        answerValue: Asia
+      - isCorrect: 0
+        answerValue: Europe
+    imageAnswer:
+      answers: []
+    hasTime: 1
+    questionTimerData:
+      timerType: 2
+      timerValue: 20
+  - questionType: 0
+    questionText: Which river is the longest in the world?
+    questionImage: {fileID: 0}
+    answerType: 0
+    textAnswer:
+      answers:
+      - isCorrect: 1
+        answerValue: Nile River
+      - isCorrect: 0
+        answerValue: Yellow River
+      - isCorrect: 0
+        answerValue: Amazon River
+      - isCorrect: 0
+        answerValue: Congo River
+    imageAnswer:
+      answers: []
+    hasTime: 1
+    questionTimerData:
+      timerType: 2
+      timerValue: 15
+  - questionType: 0
+    questionText: What is the name of the largest desert on Earth?
+    questionImage: {fileID: 0}
+    answerType: 0
+    textAnswer:
+      answers:
+      - isCorrect: 0
+        answerValue: Atacama Desert
+      - isCorrect: 0
+        answerValue: Danakil Desert
+      - isCorrect: 0
+        answerValue: Thar Desert
+      - isCorrect: 1
+        answerValue: Sahara Desert
+    imageAnswer:
+      answers: []
+    hasTime: 0
+    questionTimerData:
+      timerType: 0
+      timerValue: 0
+  - questionType: 0
+    questionText: What is the primary language spoken in Brazil?
+    questionImage: {fileID: 0}
+    answerType: 0
+    textAnswer:
+      answers:
+      - isCorrect: 1
+        answerValue: Portuguese
+      - isCorrect: 0
+        answerValue: English
+      - isCorrect: 0
+        answerValue: Spanish
+      - isCorrect: 0
+        answerValue: Arabic
+    imageAnswer:
+      answers: []
+    hasTime: 0
+    questionTimerData:
+      timerType: 0
+      timerValue: 0
