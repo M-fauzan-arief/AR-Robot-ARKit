@@ -4,7 +4,6 @@ using TMPro;
 public class ScoreManager : MonoBehaviour
 {
     public TextMeshProUGUI scoreText;    // UI Text for displaying score
-    public TextMeshProUGUI starText;     // UI Text for displaying stars
     public GameObject ScoreCanvas;       // Canvas to show score
 
     [SerializeField]
@@ -13,11 +12,21 @@ public class ScoreManager : MonoBehaviour
     private int stars = 0;               // Number of stars earned
     private int objectPlace = 0;         // Number of objects placed
 
+    // References to the star objects assigned in the Unity editor
+    public GameObject star1;
+    public GameObject star2;
+    public GameObject star3;
+
     void Start()
     {
         scoreText.text = "Score: 0";
-        starText.text = "";
+
         ScoreCanvas.SetActive(false);    // Ensure the canvas is initially hidden
+
+        // Initially hide all stars
+        star1.SetActive(false);
+        star2.SetActive(false);
+        star3.SetActive(false);
     }
 
     public void UpdateScore()
@@ -40,34 +49,33 @@ public class ScoreManager : MonoBehaviour
         if (objectPlace >= totalObjects)
         {
             // Player successfully placed all correct objects
-            if (score == totalObjects)
+            if (score == 3)
             {
                 stars = 3;
-                starText.text = "You win! All objects placed correctly! 3 Stars!";
-                ScoreCanvas.SetActive(true);
-                Debug.Log("You win! All objects placed correctly! 3 Stars!");
+                star1.SetActive(true);
+                star2.SetActive(true);
+                star3.SetActive(true);
+  
             }
-            else if (score == totalObjects - 1)
+            else if (score == 2)
             {
                 stars = 2;
-                starText.text = "You win! Almost all objects placed correctly! 2 Stars!";
-                ScoreCanvas.SetActive(true);
-                Debug.Log("You win! Almost all objects placed correctly! 2 Stars!");
+                star1.SetActive(true);
+                star2.SetActive(true);
+                star3.SetActive(false);  // Hide the 3rd star
+ 
             }
-            else if (score == totalObjects - 2)
+            else if (score == 1)
             {
                 stars = 1;
-                starText.text = "You win! Some objects placed correctly! 1 Star!";
-                ScoreCanvas.SetActive(true);
-                Debug.Log("You win! Some objects placed correctly! 1 Star!");
+                star1.SetActive(true);
+                star2.SetActive(false);  // Hide the 2nd and 3rd star
+                star3.SetActive(false);
+
             }
-            else
-            {
-                stars = 0;
-                starText.text = "Not all objects placed correctly. 0 Stars.!";
-                ScoreCanvas.SetActive(true);
-                Debug.Log("Not all objects placed correctly. 0 Stars.");
-            }
+
+            ScoreCanvas.SetActive(true); // Show the score canvas when the player wins
+            Debug.Log("You win! Score: " + score + " Stars: " + stars);
         }
     }
 }

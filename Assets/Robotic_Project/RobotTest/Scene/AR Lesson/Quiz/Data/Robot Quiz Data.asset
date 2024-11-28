@@ -1,0 +1,138 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c49667146d4a9e46ae4f20a5dc25781, type: 3}
+  m_Name: Robot Quiz Data
+  m_EditorClassIdentifier: 
+  questions:
+  - questionType: 0
+    questionText: ' The Dobot Magician Lite needs to rotate its arm 90 degrees to
+      pick up an object. If it rotates 3 times, how many degrees has it rotated?'
+    questionImage: {fileID: 0}
+    answerType: 0
+    textAnswer:
+      answers:
+      - isCorrect: 0
+        answerValue: 180 degrees
+      - isCorrect: 0
+        answerValue: 360 degrees
+      - isCorrect: 1
+        answerValue: 270 degrees
+      - isCorrect: 0
+        answerValue: 90 degrees
+    imageAnswer:
+      answers: []
+    hasTime: 0
+    questionTimerData:
+      timerType: 0
+      timerValue: 0
+  - questionType: 0
+    questionText: 'What kind of energy powers the motors in the Dobot Magician Lite?  '
+    questionImage: {fileID: 0}
+    answerType: 0
+    textAnswer:
+      answers:
+      - isCorrect: 0
+        answerValue: Heat energy
+      - isCorrect: 1
+        answerValue: Electrical energy
+      - isCorrect: 0
+        answerValue: Sound energy
+      - isCorrect: 0
+        answerValue: Magnetic energy
+    imageAnswer:
+      answers: []
+    hasTime: 1
+    questionTimerData:
+      timerType: 2
+      timerValue: 20
+  - questionType: 0
+    questionText: What is the purpose of adding sensors to a robot?
+    questionImage: {fileID: 0}
+    answerType: 0
+    textAnswer:
+      answers:
+      - isCorrect: 1
+        answerValue: To help the robot sense objects, light, or touch
+      - isCorrect: 0
+        answerValue: To give the robot extra power
+      - isCorrect: 0
+        answerValue: To make the robot move faster
+      - isCorrect: 0
+        answerValue: "To change the robot\u2019s color"
+    imageAnswer:
+      answers: []
+    hasTime: 1
+    questionTimerData:
+      timerType: 2
+      timerValue: 15
+  - questionType: 0
+    questionText: ' What programming tool can be used to control the Dobot Magician
+      Lite?'
+    questionImage: {fileID: 0}
+    answerType: 0
+    textAnswer:
+      answers:
+      - isCorrect: 1
+        answerValue: Scratch-based visual coding
+      - isCorrect: 0
+        answerValue: Microsoft Word
+      - isCorrect: 0
+        answerValue: A music app
+      - isCorrect: 1
+        answerValue: calculator
+    imageAnswer:
+      answers: []
+    hasTime: 0
+    questionTimerData:
+      timerType: 0
+      timerValue: 0
+  - questionType: 0
+    questionText: Which part of the Dobot Magician Lite helps it grip and hold objects?
+    questionImage: {fileID: 0}
+    answerType: 0
+    textAnswer:
+      answers:
+      - isCorrect: 1
+        answerValue: Its gripper or suction cup
+      - isCorrect: 0
+        answerValue: Its wheels
+      - isCorrect: 0
+        answerValue: Its camera
+      - isCorrect: 0
+        answerValue: Its sensors
+    imageAnswer:
+      answers: []
+    hasTime: 0
+    questionTimerData:
+      timerType: 0
+      timerValue: 0
+  - questionType: 0
+    questionText: If the Dobot Magician Lite can pick up 3 objects per minute, how
+      many objects can it pick up in 5 minutes?
+    questionImage: {fileID: 0}
+    answerType: 0
+    textAnswer:
+      answers:
+      - isCorrect: 1
+        answerValue: 5 objects
+      - isCorrect: 1
+        answerValue: 15 objects
+      - isCorrect: 0
+        answerValue: 10 objects
+      - isCorrect: 0
+        answerValue: 20 objects
+    imageAnswer:
+      answers: []
+    hasTime: 0
+    questionTimerData:
+      timerType: 0
+      timerValue: 0
