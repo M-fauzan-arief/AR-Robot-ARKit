@@ -17,7 +17,7 @@ namespace QuizSystem.Gameplay
 
         [Space]
         [SerializeField] private SharableBool _openQuizAutomatically;
-        
+
         [Space]
         [SerializeField] private Canvas _quizCanvas;
         [SerializeField] private Slider _questionsNumberSlider;
@@ -62,6 +62,12 @@ namespace QuizSystem.Gameplay
         [Space]
         [SerializeField] private GameObject _interactionBlocker;
 
+        [Space]
+        [Header("Sound Effects")]
+        [SerializeField] private AudioClip _correctAnswerSound;
+        [SerializeField] private AudioClip _incorrectAnswerSound;
+
+        private AudioSource _audioSource;
 
         private bool _isQuizStarted = false;
 
@@ -69,28 +75,29 @@ namespace QuizSystem.Gameplay
         private int _currentQuestionIndex = 0;
         private Question _currentQuestion;
 
-        
         public void Open()
-        { 
+        {
             _quizData = _chosenQuizData.chosenQuiz;
             StartQuiz();
-            _quizCanvas.enabled = true; 
-            _quizCanvas.gameObject.SetActive(true); 
+            _quizCanvas.enabled = true;
+            _quizCanvas.gameObject.SetActive(true);
         }
-        public void Close() 
-        { 
-            _quizCanvas.enabled = false; 
-            _quizCanvas.gameObject.SetActive(false); 
+
+        public void Close()
+        {
+            _quizCanvas.enabled = false;
+            _quizCanvas.gameObject.SetActive(false);
         }
-        
-        
+
         private void Awake()
         {
+            _audioSource = GetComponent<AudioSource>();
             if (_openQuizAutomatically.value)
             {
                 Open();
             }
         }
+
         private void OnEnable()
         {
             QuizEvents.OnChooseTextAnswer += HandleChosenTextAnswer;
@@ -98,6 +105,7 @@ namespace QuizSystem.Gameplay
 
             _nextButton.onClick.AddListener(GoNextQuestion);
         }
+
         private void OnDisable()
         {
             QuizEvents.OnChooseTextAnswer -= HandleChosenTextAnswer;
@@ -117,17 +125,19 @@ namespace QuizSystem.Gameplay
             ShowQuestion(0);
             _isQuizStarted = true;
         }
+
         private void HandleFinishedQuiz()
         {
             Debug.Log("Quiz is Finished");
 
-            //Calcualte the correct Answers percentage
+            // Calculate the correct Answers percentage
             _resultData.correctAnswersPercentage = (float)_resultData.numberOfCorrectAnswers / _resultData.totalNumberOfQuestions * 100;
 
             QuizEvents.OnQuizIsFinished?.Invoke();
             Close();
             ResetManagerState();
         }
+
         private void ShowQuestion(int index)
         {
             StartCoroutine(ShowQuestionRoutine(index));
@@ -137,7 +147,6 @@ namespace QuizSystem.Gameplay
         {
             if (_isQuizStarted)
                 yield return new WaitForSeconds(_questionsTransitionTime);
-
 
             if (index >= _quizData.questions.Count)
             {
@@ -169,7 +178,7 @@ namespace QuizSystem.Gameplay
             if (_currentQuestion.hasTime)
             {
                 _quizTimer.Open();
-                yield return new WaitUntil(()=> _quizTimer.gameObject.activeInHierarchy == true);
+                yield return new WaitUntil(() => _quizTimer.gameObject.activeInHierarchy == true);
                 _quizTimer.StartCountDownTimer(_currentQuestion.questionTimerData);
             }
             else
@@ -186,6 +195,7 @@ namespace QuizSystem.Gameplay
             _textQuestionHolder.SetActive(true);
             _imageQuestionHolder.SetActive(false);
         }
+
         private void ShowImageQuestion()
         {
             _questionIMG.sprite = _currentQuestion.questionImage;
@@ -193,6 +203,7 @@ namespace QuizSystem.Gameplay
             _imageQuestionHolder.SetActive(true);
             _textQuestionHolder.SetActive(false);
         }
+
         private void ShowTextAnswers()
         {
             for (int i = 0; i < _currentQuestion.textAnswer.answers.Count; i++)
@@ -205,18 +216,18 @@ namespace QuizSystem.Gameplay
                 _textAnswers[i].IsCorrect = currentAnswerData.isCorrect;
             }
 
-            if(_currentQuestion.textAnswer.answers.Count < _textAnswers.Count)
+            if (_currentQuestion.textAnswer.answers.Count < _textAnswers.Count)
             {
-                for (int i = _currentQuestion.textAnswer.answers.Count; i < _textAnswers.Count ; i++)
+                for (int i = _currentQuestion.textAnswer.answers.Count; i < _textAnswers.Count; i++)
                 {
                     _textAnswers[i].gameObject.SetActive(false);
                 }
             }
 
-
             _imageAnswersHolder.SetActive(false);
             _textAnswersHolder.SetActive(true);
         }
+
         private void ShowImageAnswers()
         {
             for (int i = 0; i < _currentQuestion.imageAnswer.answers.Count; i++)
@@ -240,9 +251,9 @@ namespace QuizSystem.Gameplay
             _textAnswersHolder.SetActive(false);
             _imageAnswersHolder.SetActive(true);
         }
+
         private void GoNextQuestion()
         {
-            //if the user must answer the current answer first
             if (!_isAbleToGoNext)
                 return;
 
@@ -251,7 +262,7 @@ namespace QuizSystem.Gameplay
             ShowQuestion(_currentQuestionIndex);
             _quizProgressBar.Advance();
         }
-        
+
         private void HandleAnswer(QuizAnswer quizAnswer)
         {
             _interactionBlocker.SetActive(true);
@@ -263,23 +274,26 @@ namespace QuizSystem.Gameplay
             {
                 quizAnswer.DisplayAsCorrect();
                 Debug.Log("Correct Answer");
+                PlaySound(_correctAnswerSound);
                 _resultData.numberOfCorrectAnswers++;
             }
             else
             {
                 quizAnswer.DisplayAsIncorrect();
-                _resultData.numberOfIncorrectAnswers++;
                 Debug.Log("Incorrect Answer");
+                PlaySound(_incorrectAnswerSound);
+                _resultData.numberOfIncorrectAnswers++;
             }
 
             _isAbleToGoNext = true;
             GoNextQuestion();
         }
-        
+
         private void HandleChosenTextAnswer(TextQuizAnswer answer)
         {
             HandleAnswer(answer);
         }
+
         private void HandleChoseImageAnswer(ImageQuizAnswer answer)
         {
             HandleAnswer(answer);
@@ -293,5 +307,13 @@ namespace QuizSystem.Gameplay
             _quizData = null;
             _quizProgressBar.ResetProgressState();
         }
-    } 
+
+        private void PlaySound(AudioClip clip)
+        {
+            if (_audioSource != null && clip != null)
+            {
+                _audioSource.PlayOneShot(clip);
+            }
+        }
+    }
 }

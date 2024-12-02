@@ -717,8 +717,8 @@ Transform:
   m_GameObject: {fileID: 677510323}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.47, y: 0.85, z: 1.29}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -2.9, y: 0.85, z: 0.96}
+  m_LocalScale: {x: 0.45553, y: 0.45553, z: 0.45553}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 8169544993643609510}
@@ -1364,7 +1364,7 @@ Transform:
   m_GameObject: {fileID: 1416824059}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0.30151588, y: 3.118, z: -2.622}
+  m_LocalPosition: {x: -0.019, y: 3.118, z: -2.949}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1697,8 +1697,8 @@ Transform:
   m_GameObject: {fileID: 2014789989}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.91, y: 0.85, z: 1.29}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -3.57, y: 0.85, z: 0.96}
+  m_LocalScale: {x: 0.45553, y: 0.45553, z: 0.45553}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8169544993643609510}
@@ -1830,8 +1830,8 @@ Transform:
   m_GameObject: {fileID: 2113217373}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.15, y: 0.85, z: 1.29}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -4.3, y: 0.85, z: 0.96}
+  m_LocalScale: {x: 0.45553, y: 0.45553, z: 0.45553}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8169544993643609510}
@@ -2039,8 +2039,8 @@ MonoBehaviour:
   SourceType: 0
   ImageFileSource:
     PathType: 1
-    Path: Kalajengking.jpeg
-    Name: Kalajengking.jpg
+    Path: Apiro2.jpg
+    Name: Apiro2.jpg
     Scale: 1
   TargetDataFileSource:
     PathType: 1
@@ -9518,6 +9518,7 @@ GameObject:
   - component: {fileID: 372590291631846874}
   - component: {fileID: 7672643116853653206}
   - component: {fileID: 7672643116853653207}
+  - component: {fileID: 7672643116853653208}
   m_Layer: 0
   m_Name: End Effector
   m_TagString: Untagged
@@ -9693,7 +9694,7 @@ Transform:
   m_GameObject: {fileID: 4507961787179662502}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -3.45, y: 0, z: 0}
   m_LocalScale: {x: 1.3920813, y: 1.3920813, z: 1.3920813}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9902,12 +9903,29 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.020000001, y: 0.02, z: 0.014999999}
   m_Center: {x: 0.000000029802322, y: -0.00000022373395, z: 0.007500148}
+--- !u!114 &7672643116853653208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7281437560326153760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 399d3c523cfe42246867a4f557f47499, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grabButton: {fileID: 608826495}
+  snapPosition: {fileID: 4516131551522509756}
+  buttonText: {fileID: 805400743}
+  grabbedObject: {fileID: 0}
+  isHolding: 0
 --- !u!23 &7674329090048701460
 MeshRenderer:
   m_ObjectHideFlags: 0

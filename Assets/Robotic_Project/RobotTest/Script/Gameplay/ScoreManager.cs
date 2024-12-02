@@ -17,6 +17,10 @@ public class ScoreManager : MonoBehaviour
     public GameObject star2;
     public GameObject star3;
 
+    [Header("Audio Settings")]
+    [SerializeField] private AudioClip successMusic; // Music to play when the mission is completed
+    private AudioSource audioSource; // AudioSource to play the music
+
     void Start()
     {
         scoreText.text = "Score: 0";
@@ -27,6 +31,14 @@ public class ScoreManager : MonoBehaviour
         star1.SetActive(false);
         star2.SetActive(false);
         star3.SetActive(false);
+
+        // Ensure AudioSource exists
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource.playOnAwake = false;
+        }
     }
 
     public void UpdateScore()
@@ -55,7 +67,6 @@ public class ScoreManager : MonoBehaviour
                 star1.SetActive(true);
                 star2.SetActive(true);
                 star3.SetActive(true);
-  
             }
             else if (score == 2)
             {
@@ -63,7 +74,6 @@ public class ScoreManager : MonoBehaviour
                 star1.SetActive(true);
                 star2.SetActive(true);
                 star3.SetActive(false);  // Hide the 3rd star
- 
             }
             else if (score == 1)
             {
@@ -71,11 +81,24 @@ public class ScoreManager : MonoBehaviour
                 star1.SetActive(true);
                 star2.SetActive(false);  // Hide the 2nd and 3rd star
                 star3.SetActive(false);
-
             }
 
             ScoreCanvas.SetActive(true); // Show the score canvas when the player wins
             Debug.Log("You win! Score: " + score + " Stars: " + stars);
+            PlaySuccessMusic(); // Play success music when mission is complete
+        }
+    }
+
+    private void PlaySuccessMusic()
+    {
+        if (successMusic != null && audioSource != null)
+        {
+            audioSource.clip = successMusic;
+            audioSource.Play();
+        }
+        else
+        {
+            Debug.LogWarning("Success music or AudioSource is missing!");
         }
     }
 }

@@ -27,12 +27,28 @@ namespace QuizSystem.UI
         [Space]
         [SerializeField] private Canvas _resultCanvas;
 
+        [Header("Audio Settings")]
+        [SerializeField] private AudioClip _finishMusic; // Music to play when the quiz finishes
+        private AudioSource _audioSource; // AudioSource to play the music
+
+        private void Awake()
+        {
+            // Ensure AudioSource exists
+            _audioSource = GetComponent<AudioSource>();
+            if (_audioSource == null)
+            {
+                _audioSource = gameObject.AddComponent<AudioSource>();
+                _audioSource.playOnAwake = false;
+            }
+        }
+
         private void OnEnable()
         {
             _nextButton.onClick.AddListener(Close);
 
             QuizEvents.OnQuizIsFinished += Open;
         }
+
         private void OnDisable()
         {
             _nextButton.onClick.RemoveListener(Close);
@@ -45,7 +61,7 @@ namespace QuizSystem.UI
             _correctAnswersTMP.text = $"{_resultData.numberOfCorrectAnswers}<#b3bedb>/ {_resultData.totalNumberOfQuestions}";
             _incorrectAnswersTMP.text = $"{_resultData.numberOfIncorrectAnswers}<#b3bedb>/ {_resultData.totalNumberOfQuestions}";
 
-            _percentageTMP.text =$"{ _resultData.correctAnswersPercentage} % Correct";
+            _percentageTMP.text = $"{_resultData.correctAnswersPercentage} % Correct";
 
             _timeTakenTMP.text = $"{_resultData.totalTimeTakenToFinishQuiz} Seconds";
         }
@@ -56,6 +72,8 @@ namespace QuizSystem.UI
 
             _resultCanvas.enabled = true;
             _resultCanvas.gameObject.SetActive(true);
+
+            PlayFinishMusic(); // Play the music when the quiz is finished
         }
 
         public override void Close()
@@ -65,5 +83,18 @@ namespace QuizSystem.UI
 
             QuizEvents.OnCloseQuiz?.Invoke();
         }
-    } 
+
+        private void PlayFinishMusic()
+        {
+            if (_finishMusic != null && _audioSource != null)
+            {
+                _audioSource.clip = _finishMusic;
+                _audioSource.Play();
+            }
+            else
+            {
+                Debug.LogWarning("Finish music or AudioSource is missing!");
+            }
+        }
+    }
 }
