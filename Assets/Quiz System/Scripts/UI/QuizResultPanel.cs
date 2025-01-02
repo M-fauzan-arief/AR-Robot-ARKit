@@ -7,6 +7,8 @@ using UnityEngine.UI;
 using QuizSystem.Events;
 using QuizSystem.Interface;
 using QuizSystem.UI.Base;
+using PlayFab;
+using PlayFab.ClientModels;
 
 namespace QuizSystem.UI
 {
@@ -74,6 +76,8 @@ namespace QuizSystem.UI
             _resultCanvas.gameObject.SetActive(true);
 
             PlayFinishMusic(); // Play the music when the quiz is finished
+
+            SendScoreToPlayFab(); // Send the score to PlayFab Leaderboard
         }
 
         public override void Close()
@@ -95,6 +99,45 @@ namespace QuizSystem.UI
             {
                 Debug.LogWarning("Finish music or AudioSource is missing!");
             }
+        }
+
+        // Method to send score to PlayFab
+        private void SendScoreToPlayFab()
+        {
+            // Ensure user is logged in to PlayFab
+            if (PlayFabClientAPI.IsClientLoggedIn())
+            {
+                var playerScore = _resultData.correctAnswersPercentage; // You can send a different score metric if you want
+                var request = new UpdatePlayerStatisticsRequest()
+                {
+                    Statistics = new List<StatisticUpdate>
+                    {
+                        new StatisticUpdate
+                        {
+                            StatisticName = "QuizLeaderboard", // Leaderboard name in PlayFab
+                            Value = (int)playerScore // Cast the score to int if it's a percentage
+                        }
+                    }
+                };
+
+                PlayFabClientAPI.UpdatePlayerStatistics(request, OnScoreSentToPlayFab, OnError);
+            }
+            else
+            {
+                Debug.LogWarning("User is not logged in to PlayFab. Cannot send score.");
+            }
+        }
+
+        // Callback when score is successfully sent
+        private void OnScoreSentToPlayFab(UpdatePlayerStatisticsResult result)
+        {
+            Debug.Log("Score sent to PlayFab successfully.");
+        }
+
+        // Callback when there is an error sending the score
+        private void OnError(PlayFabError error)
+        {
+            Debug.LogError("Error sending score to PlayFab: " + error.GenerateErrorReport());
         }
     }
 }
