@@ -39,6 +39,8 @@ EditorBuildSettings:
     EasyAR.Settings: {fileID: 11400000, guid: 0f20129de4c3ab540a31fb56717becaf, type: 2}
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: fabdafd5b3bed43ccb8bb7f44e35d38a, type: 2}
     UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: d517d1e4cbdcf4849a29a5b46054af63, type: 2}
+    com.unity.addressableassets: {fileID: 11400000, guid: 688d4de2b0ffe474881b28b54b897e54, type: 2}
+    com.unity.localization.settings: {fileID: 11400000, guid: f2dae7f0bf976f54dacb19152a59180c, type: 2}
     com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: 6af9abf18d3554165825216bcf011800, type: 2}
     com.unity.xr.magicleap.magic_leap_settings: {fileID: 11400000, guid: c8f1d14bdc9a545409c5654eed994cd3, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: f86d608ee83544fbd8034f485a4a42b1, type: 2}

@@ -222,7 +222,7 @@ public class PlayFabManager : MonoBehaviour
     {
         var request = new GetLeaderboardRequest
         {
-            StatisticName = "Level1",
+            StatisticName = "QuizLeaderboard",
             StartPosition = 0,
             MaxResultsCount = 10
         };
