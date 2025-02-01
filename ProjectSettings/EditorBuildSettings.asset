@@ -35,6 +35,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Robotic_Project/Scene/Quiz/Scenes/Robot_Quiz.unity
     guid: 196a95089bc3bae429fe401d2cb191a2
+  - enabled: 1
+    path: Assets/Robotic_Project/Scene/Learning Module/Chapter 1/Chapter_1.unity
+    guid: a93ad7fa96cfa644b8661b5d222ab815
+  - enabled: 1
+    path: Assets/Robotic_Project/Scene/Learning Module/Lesson_Select.unity
+    guid: 27392c3700577ed41ae6358285af3802
+  - enabled: 1
+    path: Assets/Robotic_Project/Scene/Learning Module/Chapter 2/Chapter 2.unity
+    guid: 562cdcf19c898e64196276de8232e04e
   m_configObjects:
     EasyAR.Settings: {fileID: 11400000, guid: 0f20129de4c3ab540a31fb56717becaf, type: 2}
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: fabdafd5b3bed43ccb8bb7f44e35d38a, type: 2}

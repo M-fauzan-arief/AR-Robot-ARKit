@@ -81,7 +81,6 @@ public class SceneTransition : MonoBehaviour
     }
 
 
-    // Main menu logic
     public void pause()
     {
         pauseMenu.SetActive(false);
@@ -105,6 +104,20 @@ public class SceneTransition : MonoBehaviour
         SceneManager.LoadScene("Robot_Quiz");
         Debug.Log("Quiz is loaded");
     }
+
+    public void Lesson_Select()
+    {
+        SceneManager.LoadScene("Lesson_Select");
+        Debug.Log("Lesson Selection is loaded");
+    }
+
+    public void Chapter_1()
+    {
+        SceneManager.LoadScene("Chapter_1");
+        Debug.Log("Lesson Selection is loaded");
+    }
+
+
 
 
     public void ARCodeAPIRO()
