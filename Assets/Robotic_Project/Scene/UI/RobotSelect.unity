@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1064,8 +1063,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Select Robot
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 797405dc4ec44dc4b922b9211bd673c4, type: 2}
-  m_sharedMaterial: {fileID: 4882552448965951351, guid: 797405dc4ec44dc4b922b9211bd673c4, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 63c32f2c42b69474c9971d7506b44a15, type: 2}
+  m_sharedMaterial: {fileID: -7665478784194000710, guid: 63c32f2c42b69474c9971d7506b44a15, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

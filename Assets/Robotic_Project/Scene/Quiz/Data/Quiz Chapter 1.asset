@@ -1,0 +1,218 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c49667146d4a9e46ae4f20a5dc25781, type: 3}
+  m_Name: Quiz Chapter 1
+  m_EditorClassIdentifier: 
+  questions:
+  - questionType: 0
+    questionText: What is the primary purpose of the HOME position in a robot program?
+    questionImage: {fileID: 0}
+    answerType: 0
+    textAnswer:
+      answers:
+      - isCorrect: 0
+        answerValue: To start the program
+      - isCorrect: 1
+        answerValue: To provide a safe starting/ending position
+      - isCorrect: 0
+        answerValue: To calibrate sensors
+      - isCorrect: 0
+        answerValue: To increase speed
+    imageAnswer:
+      answers: []
+    hasTime: 0
+    questionTimerData:
+      timerType: 0
+      timerValue: 0
+  - questionType: 0
+    questionText: Which movement type (MoveJ or MoveL) is used for precise linear
+      motions?
+    questionImage: {fileID: 0}
+    answerType: 0
+    textAnswer:
+      answers:
+      - isCorrect: 0
+        answerValue: MoveJ
+      - isCorrect: 1
+        answerValue: MoveL
+      - isCorrect: 0
+        answerValue: Both
+      - isCorrect: 0
+        answerValue: Neither
+    imageAnswer:
+      answers: []
+    hasTime: 1
+    questionTimerData:
+      timerType: 2
+      timerValue: 20
+  - questionType: 0
+    questionText: Why are AB (Above) positions used before AT positions in pick-and-place
+      routines?
+    questionImage: {fileID: 0}
+    answerType: 0
+    textAnswer:
+      answers:
+      - isCorrect: 0
+        answerValue: To save time
+      - isCorrect: 0
+        answerValue: To reduce power consumption
+      - isCorrect: 0
+        answerValue: ' To simplify programming'
+      - isCorrect: 1
+        answerValue: ' To avoid collisions and ensure accuracy'
+    imageAnswer:
+      answers: []
+    hasTime: 1
+    questionTimerData:
+      timerType: 2
+      timerValue: 15
+  - questionType: 0
+    questionText: What does "repeatability" refer to in robotics?
+    questionImage: {fileID: 0}
+    answerType: 0
+    textAnswer:
+      answers:
+      - isCorrect: 0
+        answerValue: "The robot\u2019s ability to reach new positions"
+      - isCorrect: 0
+        answerValue: "The robot\u2019s speed during operation"
+      - isCorrect: 0
+        answerValue: "The robot\u2019s accuracy in new tasks"
+      - isCorrect: 1
+        answerValue: "The robot\u2019s ability to return to the same position consistently"
+    imageAnswer:
+      answers: []
+    hasTime: 0
+    questionTimerData:
+      timerType: 0
+      timerValue: 0
+  - questionType: 0
+    questionText: Which term describes programming by manually moving the robot and
+      saving points?
+    questionImage: {fileID: 0}
+    answerType: 0
+    textAnswer:
+      answers:
+      - isCorrect: 0
+        answerValue: Blockly
+      - isCorrect: 1
+        answerValue: Teaching and Playback
+      - isCorrect: 0
+        answerValue: Looping
+      - isCorrect: 0
+        answerValue: Jumping
+    imageAnswer:
+      answers: []
+    hasTime: 0
+    questionTimerData:
+      timerType: 0
+      timerValue: 0
+  - questionType: 0
+    questionText: What happens if the robot exceeds its work envelope?
+    questionImage: {fileID: 0}
+    answerType: 0
+    textAnswer:
+      answers:
+      - isCorrect: 0
+        answerValue: ' It speeds up'
+      - isCorrect: 1
+        answerValue: It stops and displays a red indicator
+      - isCorrect: 0
+        answerValue: ' It recalibrates automatically'
+      - isCorrect: 0
+        answerValue: It switches to manual mode
+    imageAnswer:
+      answers: []
+    hasTime: 0
+    questionTimerData:
+      timerType: 0
+      timerValue: 0
+  - questionType: 0
+    questionText: Which component is part of the End of Arm Tooling (EoAT)?
+    questionImage: {fileID: 0}
+    answerType: 0
+    textAnswer:
+      answers:
+      - isCorrect: 0
+        answerValue: Power supply
+      - isCorrect: 1
+        answerValue: Suction cup
+      - isCorrect: 0
+        answerValue: USB cable
+      - isCorrect: 0
+        answerValue: Stepper motor
+    imageAnswer:
+      answers: []
+    hasTime: 0
+    questionTimerData:
+      timerType: 0
+      timerValue: 0
+  - questionType: 0
+    questionText: 'How does increasing speed affect accuracy and repeatability? '
+    questionImage: {fileID: 0}
+    answerType: 0
+    textAnswer:
+      answers:
+      - isCorrect: 1
+        answerValue: Reduces both
+      - isCorrect: 0
+        answerValue: Improves both
+      - isCorrect: 0
+        answerValue: Has no effect
+      - isCorrect: 0
+        answerValue: Stepper motor
+    imageAnswer:
+      answers: []
+    hasTime: 0
+    questionTimerData:
+      timerType: 0
+      timerValue: 0
+  - questionType: 0
+    questionText: ' What is the purpose of "touching up" a program?'
+    questionImage: {fileID: 0}
+    answerType: 0
+    textAnswer:
+      answers:
+      - isCorrect: 1
+        answerValue: To delete steps
+      - isCorrect: 0
+        answerValue: To adjust coordinates for precision
+      - isCorrect: 0
+        answerValue: To rename positions
+      - isCorrect: 0
+        answerValue: To add delays
+    imageAnswer:
+      answers: []
+    hasTime: 0
+    questionTimerData:
+      timerType: 0
+      timerValue: 0
+  - questionType: 0
+    questionText: Which motion style is used for palletizing?
+    questionImage: {fileID: 0}
+    answerType: 0
+    textAnswer:
+      answers:
+      - isCorrect: 0
+        answerValue: Jump
+      - isCorrect: 0
+        answerValue: MoveJ
+      - isCorrect: 0
+        answerValue: MoveL
+      - isCorrect: 1
+        answerValue: All of the aboveAll of the above
+    imageAnswer:
+      answers: []
+    hasTime: 0
+    questionTimerData:
+      timerType: 0
+      timerValue: 0

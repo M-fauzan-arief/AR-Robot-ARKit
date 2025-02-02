@@ -1,0 +1,215 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c49667146d4a9e46ae4f20a5dc25781, type: 3}
+  m_Name: Quiz Chapter 3
+  m_EditorClassIdentifier: 
+  questions:
+  - questionType: 0
+    questionText: 1. Which sensor detects RGB values?
+    questionImage: {fileID: 0}
+    answerType: 0
+    textAnswer:
+      answers:
+      - isCorrect: 0
+        answerValue: IR sensor
+      - isCorrect: 1
+        answerValue: Color sensor
+      - isCorrect: 0
+        answerValue: PIR sensor
+      - isCorrect: 0
+        answerValue: Potentiometer
+    imageAnswer:
+      answers: []
+    hasTime: 0
+    questionTimerData:
+      timerType: 0
+      timerValue: 0
+  - questionType: 0
+    questionText: What does an analog sensor measure?
+    questionImage: {fileID: 0}
+    answerType: 0
+    textAnswer:
+      answers:
+      - isCorrect: 0
+        answerValue: Binary states (0/1)
+      - isCorrect: 1
+        answerValue: "Continuous values (e.g., 0\u2013255)"
+      - isCorrect: 0
+        answerValue: Text strings
+      - isCorrect: 0
+        answerValue: Wireless signals
+    imageAnswer:
+      answers: []
+    hasTime: 0
+    questionTimerData:
+      timerType: 0
+      timerValue: 0
+  - questionType: 0
+    questionText: Which sensor is used to detect motion?
+    questionImage: {fileID: 0}
+    answerType: 0
+    textAnswer:
+      answers:
+      - isCorrect: 0
+        answerValue: Humiture sensor
+      - isCorrect: 1
+        answerValue: PIR sensor
+      - isCorrect: 0
+        answerValue: Light sensor
+      - isCorrect: 0
+        answerValue: Sound sensor
+    imageAnswer:
+      answers: []
+    hasTime: 0
+    questionTimerData:
+      timerType: 0
+      timerValue: 0
+  - questionType: 0
+    questionText: Which sensor is used to detect motion?
+    questionImage: {fileID: 0}
+    answerType: 0
+    textAnswer:
+      answers:
+      - isCorrect: 0
+        answerValue: What is the purpose of a servo in a part feeder?
+      - isCorrect: 1
+        answerValue: To measure color
+      - isCorrect: 0
+        answerValue: To rotate and position parts
+      - isCorrect: 0
+        answerValue: To detect obstacles
+    imageAnswer:
+      answers: []
+    hasTime: 0
+    questionTimerData:
+      timerType: 0
+      timerValue: 0
+  - questionType: 0
+    questionText: Which block sets the angle of a servo motor?
+    questionImage: {fileID: 0}
+    answerType: 0
+    textAnswer:
+      answers:
+      - isCorrect: 0
+        answerValue: Set servo angle
+      - isCorrect: 1
+        answerValue: Go to XYZ
+      - isCorrect: 0
+        answerValue: Wait seconds
+      - isCorrect: 0
+        answerValue: Broadcast message
+    imageAnswer:
+      answers: []
+    hasTime: 0
+    questionTimerData:
+      timerType: 0
+      timerValue: 0
+  - questionType: 0
+    questionText: What is a "MY BLOCK" in Blockly?
+    questionImage: {fileID: 0}
+    answerType: 0
+    textAnswer:
+      answers:
+      - isCorrect: 0
+        answerValue: A pre-built program
+      - isCorrect: 1
+        answerValue: A user-defined function
+      - isCorrect: 0
+        answerValue: A sensor calibration tool
+      - isCorrect: 0
+        answerValue: A loop structure
+    imageAnswer:
+      answers: []
+    hasTime: 0
+    questionTimerData:
+      timerType: 0
+      timerValue: 0
+  - questionType: 0
+    questionText: Which sensor measures humidity and temperature?
+    questionImage: {fileID: 0}
+    answerType: 0
+    textAnswer:
+      answers:
+      - isCorrect: 0
+        answerValue: Gesture sensor
+      - isCorrect: 1
+        answerValue: Humiture sensor
+      - isCorrect: 0
+        answerValue: Photoelectric sensor
+      - isCorrect: 0
+        answerValue: Joystick
+    imageAnswer:
+      answers: []
+    hasTime: 0
+    questionTimerData:
+      timerType: 0
+      timerValue: 0
+  - questionType: 0
+    questionText: What is the primary use of a photoelectric sensor?
+    questionImage: {fileID: 0}
+    answerType: 0
+    textAnswer:
+      answers:
+      - isCorrect: 1
+        answerValue: Detect object presence
+      - isCorrect: 0
+        answerValue: Measure light intensity
+      - isCorrect: 0
+        answerValue: Control servo motors
+      - isCorrect: 0
+        answerValue: Adjust speed
+    imageAnswer:
+      answers: []
+    hasTime: 0
+    questionTimerData:
+      timerType: 0
+      timerValue: 0
+  - questionType: 0
+    questionText: Which sensor detects hand gestures?
+    questionImage: {fileID: 0}
+    answerType: 0
+    textAnswer:
+      answers:
+      - isCorrect: 0
+        answerValue: PIR sensor
+      - isCorrect: 1
+        answerValue: Gesture sensor
+      - isCorrect: 0
+        answerValue: Sound sensor
+      - isCorrect: 0
+        answerValue: Limit switch
+    imageAnswer:
+      answers: []
+    hasTime: 0
+    questionTimerData:
+      timerType: 0
+      timerValue: 0
+  - questionType: 0
+    questionText: ' How does a potentiometer work?'
+    questionImage: {fileID: 0}
+    answerType: 0
+    textAnswer:
+      answers:
+      - isCorrect: 0
+        answerValue: Measures sound
+      - isCorrect: 1
+        answerValue: Adjusts resistance based on rotation
+      - isCorrect: 0
+        answerValue: Detects color
+      - isCorrect: 0
+        answerValue: Sends wireless signals
+    imageAnswer:
+      answers: []
+    hasTime: 0
+    questionTimerData:
+      timerType: 0
+      timerValue: 0

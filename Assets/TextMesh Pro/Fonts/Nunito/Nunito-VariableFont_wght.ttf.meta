@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 75cc8062f30e8c5429350b60e9d5a781
+guid: d4b0aeb848c547840b14664fe9528655
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Qlarendon
+  - Nunito
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ff69d869f78bef488b60c7622039144, type: 3}
   m_Name: ChosenQuiz
   m_EditorClassIdentifier: 
-  chosenQuiz: {fileID: 11400000, guid: 7cee6aa4c8d1381469a3b3a28eb29601, type: 2}
+  chosenQuiz: {fileID: 11400000, guid: 41073d1a89528a44e91b25aeae67f0d9, type: 2}

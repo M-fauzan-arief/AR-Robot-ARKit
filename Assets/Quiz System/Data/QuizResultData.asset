@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71b61fc26bf086447b81bf33bde18240, type: 3}
   m_Name: QuizResultData
   m_EditorClassIdentifier: 
-  totalNumberOfQuestions: 0
+  totalNumberOfQuestions: 6
   numberOfCorrectAnswers: 0
   numberOfIncorrectAnswers: 0
-  correctAnswersPercentage: 0
+  correctAnswersPercentage: 66.66666
+  totalTimeTakenToFinishQuiz: 0

@@ -1823,7 +1823,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8fce1a7afcc9ff449c12c32b6acbfd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _chosenQuizData: {fileID: 11400000, guid: 533cb31e4fdf5d64ba17a69a728b9d6c, type: 2}
+  _chosenQuizData: {fileID: 11400000, guid: d46ccd06002a0274e8d31215a8dde333, type: 2}
   _openQuizAutomatically: {fileID: 11400000, guid: 4ede416819db8404ab54ef04f7ec7fe9, type: 2}
   _quizCanvas: {fileID: 1566750283}
   _questionsNumberSlider: {fileID: 919678266}
@@ -1850,6 +1850,8 @@ MonoBehaviour:
   _isAbleToGoNext: 0
   _resultData: {fileID: 11400000, guid: 75488a581c6b6094ea1f6aa3c007be70, type: 2}
   _interactionBlocker: {fileID: 1367507256}
+  _correctAnswerSound: {fileID: 0}
+  _incorrectAnswerSound: {fileID: 0}
 --- !u!4 &334926325
 Transform:
   m_ObjectHideFlags: 0
@@ -4493,6 +4495,7 @@ MonoBehaviour:
   _percentageTMP: {fileID: 1747546185}
   _nextButton: {fileID: 1845925024}
   _resultCanvas: {fileID: 1586178338}
+  _finishMusic: {fileID: 0}
 --- !u!4 &1225074836
 Transform:
   m_ObjectHideFlags: 0
