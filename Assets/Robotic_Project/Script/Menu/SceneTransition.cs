@@ -116,7 +116,38 @@ public class SceneTransition : MonoBehaviour
         SceneManager.LoadScene("Chapter_1");
         Debug.Log("Lesson Selection is loaded");
     }
+    public void Chapter_2()
+    {
+        SceneManager.LoadScene("Chapter_3");
+        Debug.Log("Lesson Selection is loaded");
+    }
 
+    public void Chapter_3()
+    {
+        SceneManager.LoadScene("Chapter_3");
+        Debug.Log("Lesson Selection is loaded");
+    }
+
+
+
+
+    public void Robot_Quiz_C1()
+    {
+        SceneManager.LoadScene("Robot_Quiz C1");
+        Debug.Log("Lesson Selection is loaded");
+    }
+
+    public void Robot_Quiz_C2()
+    {
+        SceneManager.LoadScene("Robot_Quiz C2");
+        Debug.Log("Lesson Selection is loaded");
+    }
+
+    public void Robot_Quiz_C3()
+    {
+        SceneManager.LoadScene("Robot_Quiz C3");
+        Debug.Log("Lesson Selection is loaded");
+    }
 
 
 
