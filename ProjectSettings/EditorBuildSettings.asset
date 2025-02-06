@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Robotic_Project/Scene/UI/Login.unity
+    guid: 2b4270c98c7373745a8b7600909f6a6a
+  - enabled: 1
     path: Assets/Robotic_Project/Scene/UI/Menu.unity
     guid: c4c837ba85fd75f4ea183754180e5281
   - enabled: 1
