@@ -125,7 +125,7 @@ public class PlayFabManager : MonoBehaviour
 
     public void LoadMenu()
     {
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene("Intro");
     }
 
 

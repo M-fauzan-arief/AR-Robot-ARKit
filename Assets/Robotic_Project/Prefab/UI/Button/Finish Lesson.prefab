@@ -65,7 +65,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Finish Lesson
+  m_text: 'Next Lesson
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 63c32f2c42b69474c9971d7506b44a15, type: 2}
   m_sharedMaterial: {fileID: -7665478784194000710, guid: 63c32f2c42b69474c9971d7506b44a15, type: 2}
@@ -92,7 +94,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 49
+  m_fontSize: 53.85
   m_fontSizeBase: 14.8
   m_fontWeight: 400
   m_enableAutoSizing: 1
