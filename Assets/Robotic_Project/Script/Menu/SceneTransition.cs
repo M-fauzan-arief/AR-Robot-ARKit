@@ -118,7 +118,7 @@ public class SceneTransition : MonoBehaviour
     }
     public void Chapter_2()
     {
-        SceneManager.LoadScene("Chapter_3");
+        SceneManager.LoadScene("Chapter_2");
         Debug.Log("Lesson Selection is loaded");
     }
 
