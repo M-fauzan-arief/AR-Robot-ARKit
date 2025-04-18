@@ -8,7 +8,7 @@ public class MQTT_Client : MonoBehaviour
 {
     private MqttClient client;
     [SerializeField] private string brokerAddress = "103.106.72.182";
-    [SerializeField] private int brokerPort = 8885;
+    [SerializeField] private int brokerPort = 1887;
     [SerializeField] private string robotID = "Dobot";
 
     private void Start()

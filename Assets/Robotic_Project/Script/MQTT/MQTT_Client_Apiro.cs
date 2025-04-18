@@ -10,7 +10,7 @@ namespace apirorobotmessage  // Update to your project namespace
     {
         private MqttClient client;
         [SerializeField] private string brokerAddress = "103.106.72.182";
-        [SerializeField] private int brokerPort = 8885;
+        [SerializeField] private int brokerPort = 1887;
         [SerializeField] private string robotID = "Apiro";
 
         private float lastPublishTime = 0f;
