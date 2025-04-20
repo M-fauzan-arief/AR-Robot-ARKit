@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
 public class ObjectGrabber : MonoBehaviour
 {
     [SerializeField] private Transform gripper;
@@ -53,6 +54,14 @@ public class ObjectGrabber : MonoBehaviour
         {
             if (isInRange)
             {
+                // Check lock status from ObjectPlacementManager
+                ObjectPlacementManager placementManager = FindObjectOfType<ObjectPlacementManager>();
+                if (placementManager != null && placementManager.IsObjectLocked(objectToGrab.gameObject))
+                {
+                    Debug.Log(objectToGrab.name + " is locked and cannot be grabbed.");
+                    return;
+                }
+
                 // Grab the object
                 objectToGrab.SetParent(gripper);
                 objectToGrab.localPosition = Vector3.zero;

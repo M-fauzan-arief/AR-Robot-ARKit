@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System.Collections.Generic;
 
 public class ObjectPlacementManager : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class ObjectPlacementManager : MonoBehaviour
     [SerializeField] private AudioClip correctSound; // Sound for correct placement
     [SerializeField] private AudioClip wrongSound;   // Sound for incorrect placement
     private AudioSource audioSource;                // AudioSource for playing sounds
+
+    private Dictionary<GameObject, bool> lockedObjects = new Dictionary<GameObject, bool>();
 
     private void Start()
     {
@@ -39,6 +42,16 @@ public class ObjectPlacementManager : MonoBehaviour
             Debug.Log(assignedObject.name + " placed correctly!");
             scoreManager.UpdateScore(); // Notify ScoreManager to update score
             scoreManager.UpdateObjectPlace();
+
+            // Lock the object so it can't be grabbed again
+            if (!lockedObjects.ContainsKey(other.gameObject))
+            {
+                lockedObjects.Add(other.gameObject, true);
+            }
+            else
+            {
+                lockedObjects[other.gameObject] = true;
+            }
         }
         else
         {
@@ -68,5 +81,11 @@ public class ObjectPlacementManager : MonoBehaviour
         {
             Debug.LogWarning("AudioClip or AudioSource is missing!");
         }
+    }
+
+    // Public method to check lock status
+    public bool IsObjectLocked(GameObject obj)
+    {
+        return lockedObjects.ContainsKey(obj) && lockedObjects[obj];
     }
 }
