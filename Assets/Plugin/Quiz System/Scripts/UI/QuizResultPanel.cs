@@ -1,5 +1,4 @@
 using QuizSystem.SO;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -9,6 +8,7 @@ using QuizSystem.Interface;
 using QuizSystem.UI.Base;
 using PlayFab;
 using PlayFab.ClientModels;
+using UnityEngine.SceneManagement; // Required for scene loading
 
 namespace QuizSystem.UI
 {
@@ -29,13 +29,15 @@ namespace QuizSystem.UI
         [Space]
         [SerializeField] private Canvas _resultCanvas;
 
+        [Header("Navigation Buttons")]
+        [SerializeField] private Button _backToMainMenuButton; // New button to return to main menu
+
         [Header("Audio Settings")]
-        [SerializeField] private AudioClip _finishMusic; // Music to play when the quiz finishes
-        private AudioSource _audioSource; // AudioSource to play the music
+        [SerializeField] private AudioClip _finishMusic;
+        private AudioSource _audioSource;
 
         private void Awake()
         {
-            // Ensure AudioSource exists
             _audioSource = GetComponent<AudioSource>();
             if (_audioSource == null)
             {
@@ -47,6 +49,7 @@ namespace QuizSystem.UI
         private void OnEnable()
         {
             _nextButton.onClick.AddListener(Close);
+            _backToMainMenuButton.onClick.AddListener(BackToMainMenu);
 
             QuizEvents.OnQuizIsFinished += Open;
         }
@@ -54,6 +57,7 @@ namespace QuizSystem.UI
         private void OnDisable()
         {
             _nextButton.onClick.RemoveListener(Close);
+            _backToMainMenuButton.onClick.RemoveListener(BackToMainMenu);
 
             QuizEvents.OnQuizIsFinished -= Open;
         }
@@ -62,29 +66,23 @@ namespace QuizSystem.UI
         {
             _correctAnswersTMP.text = $"{_resultData.numberOfCorrectAnswers}<#b3bedb>/ {_resultData.totalNumberOfQuestions}";
             _incorrectAnswersTMP.text = $"{_resultData.numberOfIncorrectAnswers}<#b3bedb>/ {_resultData.totalNumberOfQuestions}";
-
             _percentageTMP.text = $"{_resultData.correctAnswersPercentage} % Correct";
-
             _timeTakenTMP.text = $"{_resultData.totalTimeTakenToFinishQuiz} Seconds";
         }
 
         public override void Open()
         {
             SetResultData();
-
             _resultCanvas.enabled = true;
             _resultCanvas.gameObject.SetActive(true);
-
-            PlayFinishMusic(); // Play the music when the quiz is finished
-
-            SendScoreToPlayFab(); // Send the score to PlayFab Leaderboard
+            PlayFinishMusic();
+            SendScoreToPlayFab();
         }
 
         public override void Close()
         {
             _resultCanvas.gameObject.SetActive(false);
             _resultCanvas.enabled = false;
-
             QuizEvents.OnCloseQuiz?.Invoke();
         }
 
@@ -101,26 +99,38 @@ namespace QuizSystem.UI
             }
         }
 
-        // Method to send score to PlayFab
         private void SendScoreToPlayFab()
         {
-            // Ensure user is logged in to PlayFab
             if (PlayFabClientAPI.IsClientLoggedIn())
             {
-                var playerScore = _resultData.correctAnswersPercentage; // You can send a different score metric if you want
-                var request = new UpdatePlayerStatisticsRequest()
+                var playerScore = _resultData.correctAnswersPercentage;
+                var request = new UpdatePlayerStatisticsRequest
                 {
                     Statistics = new List<StatisticUpdate>
                     {
                         new StatisticUpdate
                         {
-                            StatisticName = "QuizLeaderboard", // Leaderboard name in PlayFab
-                            Value = (int)playerScore // Cast the score to int if it's a percentage
+                            StatisticName = "QuizLeaderboard",
+                            Value = (int)playerScore
                         }
                     }
                 };
 
-                PlayFabClientAPI.UpdatePlayerStatistics(request, OnScoreSentToPlayFab, OnError);
+                PlayFabClientAPI.UpdatePlayerStatistics(request, result =>
+                {
+                    Debug.Log("Score sent to PlayFab successfully.");
+
+                    if (AchievementManager.Instance != null)
+                    {
+                        AchievementManager.Instance.UnlockAchievement("complete_quiz");
+                        Debug.Log("Quiz achievement unlocked.");
+                    }
+                    else
+                    {
+                        Debug.LogWarning("AchievementManager.Instance is null. Make sure it's in the scene.");
+                    }
+
+                }, OnError);
             }
             else
             {
@@ -128,16 +138,15 @@ namespace QuizSystem.UI
             }
         }
 
-        // Callback when score is successfully sent
-        private void OnScoreSentToPlayFab(UpdatePlayerStatisticsResult result)
-        {
-            Debug.Log("Score sent to PlayFab successfully.");
-        }
-
-        // Callback when there is an error sending the score
         private void OnError(PlayFabError error)
         {
             Debug.LogError("Error sending score to PlayFab: " + error.GenerateErrorReport());
+        }
+
+        private void BackToMainMenu()
+        {
+            Destroy(gameObject);
+            SceneManager.LoadScene("Menu"); // Replace "MainMenu" with your main menu scene name
         }
     }
 }

@@ -402,6 +402,7 @@ GameObject:
   m_Component:
   - component: {fileID: 887896845}
   - component: {fileID: 887896846}
+  - component: {fileID: 887896847}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -437,6 +438,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 0}
+--- !u!114 &887896847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 887896843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5ba877f024200447815b2dcd32e76cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerProfileManager: {fileID: 0}
 --- !u!1 &1014711448
 GameObject:
   m_ObjectHideFlags: 0
@@ -1320,8 +1334,40 @@ PrefabInstance:
       value: Finish Lesson
       objectReference: {fileID: 0}
     - target: {fileID: 8589319261119189635, guid: db362ebafe15c7f41a12a6e8f69088b2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8589319261119189635, guid: db362ebafe15c7f41a12a6e8f69088b2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8589319261119189635, guid: db362ebafe15c7f41a12a6e8f69088b2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 887896847}
+    - target: {fileID: 8589319261119189635, guid: db362ebafe15c7f41a12a6e8f69088b2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8589319261119189635, guid: db362ebafe15c7f41a12a6e8f69088b2, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: RobotSelect
+      objectReference: {fileID: 0}
+    - target: {fileID: 8589319261119189635, guid: db362ebafe15c7f41a12a6e8f69088b2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: UnlockAchievement
+      objectReference: {fileID: 0}
+    - target: {fileID: 8589319261119189635, guid: db362ebafe15c7f41a12a6e8f69088b2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: AchievementManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8589319261119189635, guid: db362ebafe15c7f41a12a6e8f69088b2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: complete_lesson
+      objectReference: {fileID: 0}
+    - target: {fileID: 8589319261119189635, guid: db362ebafe15c7f41a12a6e8f69088b2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1363,7 +1409,7 @@ GameObject:
   - component: {fileID: 2760987959568786009}
   - component: {fileID: 4364309383413706374}
   m_Layer: 5
-  m_Name: Chapter 1 Module
+  m_Name: Chapter 3 Module
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1529,8 +1575,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -323, y: -802.8}
-  m_SizeDelta: {x: 1098.7239, y: 1668}
+  m_AnchoredPosition: {x: -0.01001, y: -1154}
+  m_SizeDelta: {x: 2388, y: 2149.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4364309383413706374
 MonoBehaviour:

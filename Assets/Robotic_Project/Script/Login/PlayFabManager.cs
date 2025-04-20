@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using PlayFab;
 using PlayFab.ClientModels;
@@ -11,8 +11,8 @@ public class PlayFabManager : MonoBehaviour
     public static PlayFabManager instance;
 
     [Header("Leaderboards")]
-    public GameObject rowPrefab; // Prefab for leaderboard rows
-    public Transform rowsParent; // Parent object to hold leaderboard rows
+    public GameObject rowPrefab;
+    public Transform rowsParent;
 
     [Header("Username")]
     public GameObject nameWindow;
@@ -29,6 +29,11 @@ public class PlayFabManager : MonoBehaviour
     public Button resetPasswordButton;
 
     public TextMeshProUGUI messageText;
+    public TextMeshProUGUI PlayerID;
+    public TextMeshProUGUI Username;
+
+    private string playerID;
+    private string playerName;
 
     void Awake()
     {
@@ -66,7 +71,31 @@ public class PlayFabManager : MonoBehaviour
             }
 
             PlayFabClientAPI.GetAccountInfo(new GetAccountInfoRequest(),
-                result => Debug.Log("Session is valid. Player ID: " + result.AccountInfo.PlayFabId),
+                result =>
+                {
+                // Correct way to access AccountInfo and retrieve PlayerProfile through GetPlayerProfile
+                string playerId = result.AccountInfo.PlayFabId;
+                    Debug.Log("Session is valid. Player ID: " + playerId);
+
+                // Now, let's retrieve the player's profile information including DisplayName
+                var request = new GetPlayerProfileRequest { PlayFabId = playerId };
+                    PlayFabClientAPI.GetPlayerProfile(request, profileResult =>
+                    {
+                        string playerName = profileResult.PlayerProfile?.DisplayName;
+                        if (!string.IsNullOrEmpty(playerName))
+                        {
+                            Debug.Log("Player name: " + playerName);
+                        }
+                        else
+                        {
+                            Debug.LogWarning("DisplayName is empty.");
+                        }
+                    }, error =>
+                    {
+                        Debug.LogError("Error retrieving player profile: " + error.GenerateErrorReport());
+                    });
+
+                },
                 error =>
                 {
                     Debug.LogError("Session is invalid. Logging out...");
@@ -87,6 +116,9 @@ public class PlayFabManager : MonoBehaviour
         }
     }
 
+
+
+
     public void Login()
     {
         var request = new LoginWithEmailAddressRequest
@@ -96,7 +128,7 @@ public class PlayFabManager : MonoBehaviour
             InfoRequestParameters = new GetPlayerCombinedInfoRequestParams
             {
                 GetPlayerProfile = true,
-                GetPlayerStatistics = true // Request player statistics
+                GetPlayerStatistics = true
             }
         };
         PlayFabClientAPI.LoginWithEmailAddress(request, OnLoginSuccess, OnError);
@@ -106,7 +138,9 @@ public class PlayFabManager : MonoBehaviour
     {
         Debug.Log("Login successful!");
 
-        string playerName = result.InfoResultPayload?.PlayerProfile?.DisplayName;
+        playerID = result.PlayFabId;
+        playerName = result.InfoResultPayload?.PlayerProfile?.DisplayName;
+
         if (string.IsNullOrEmpty(playerName))
         {
             nameWindow.SetActive(true);
@@ -119,7 +153,7 @@ public class PlayFabManager : MonoBehaviour
                 messageText.text = $"Login successful! Welcome, {playerName}.";
             LoadMenu();
         }
-        // Load player statistics (level and XP)
+
         LoadPlayerStats();
     }
 
@@ -127,8 +161,6 @@ public class PlayFabManager : MonoBehaviour
     {
         SceneManager.LoadScene("Intro");
     }
-
-
 
     public void SubmitNameButton()
     {
@@ -187,7 +219,6 @@ public class PlayFabManager : MonoBehaviour
             messageText.text = "Error: " + error.ErrorMessage;
     }
 
-    // Save player stats (level and XP) to PlayFab
     public void SavePlayerStats(int level, int xp)
     {
         var request = new UpdatePlayerStatisticsRequest
@@ -203,10 +234,9 @@ public class PlayFabManager : MonoBehaviour
 
     void OnStatsSaved(UpdatePlayerStatisticsResult result)
     {
-        Debug.Log("Player stats (Level and XP) saved successfully.");
+        Debug.Log("Player stats saved.");
     }
 
-    // Load player stats (level and XP) from PlayFab
     public void LoadPlayerStats()
     {
         var request = new GetPlayerStatisticsRequest
@@ -218,8 +248,8 @@ public class PlayFabManager : MonoBehaviour
 
     void OnStatsLoaded(GetPlayerStatisticsResult result)
     {
-        int level = 1; // Default level
-        int xp = 0;    // Default XP
+        int level = 1;
+        int xp = 0;
 
         foreach (var stat in result.Statistics)
         {
@@ -231,7 +261,6 @@ public class PlayFabManager : MonoBehaviour
 
         Debug.Log($"Loaded player stats: Level = {level}, XP = {xp}");
 
-        // Notify ExperienceManager to update its values
         ExperienceManager.Instance.SetLevelAndXP(level, xp);
     }
 
@@ -249,7 +278,7 @@ public class PlayFabManager : MonoBehaviour
 
     void OnLeaderboardUpdate(UpdatePlayerStatisticsResult result)
     {
-        Debug.Log("Successfully sent leaderboard score.");
+        Debug.Log("Leaderboard score submitted.");
     }
 
     public void GetLeaderboard()
@@ -270,23 +299,25 @@ public class PlayFabManager : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        Debug.Log($"Received {result.Leaderboard.Count} leaderboard entries.");
         foreach (var item in result.Leaderboard)
         {
             GameObject newRow = Instantiate(rowPrefab, rowsParent);
             TextMeshProUGUI[] textFields = newRow.GetComponentsInChildren<TextMeshProUGUI>(true);
 
-            if (textFields.Length < 3)
+            if (textFields.Length >= 3)
             {
-                Debug.LogError($"Row prefab does not have enough TextMeshProUGUI components! Expected 3, but found {textFields.Length}.");
-                continue;
+                textFields[0].text = (item.Position + 1).ToString();
+                textFields[1].text = item.DisplayName;
+                textFields[2].text = item.StatValue.ToString();
             }
-
-            textFields[0].text = (item.Position + 1).ToString();
-            textFields[1].text = item.DisplayName;
-            textFields[2].text = item.StatValue.ToString();
         }
 
         LayoutRebuilder.ForceRebuildLayoutImmediate(rowsParent.GetComponent<RectTransform>());
+    }
+
+    // Achievement system now handled by AchievementManager
+    public void UnlockAchievement(string achievementId)
+    {
+        AchievementManager.Instance.UnlockAchievement(achievementId);
     }
 }

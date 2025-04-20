@@ -1439,7 +1439,7 @@ MonoBehaviour:
   userButton: {fileID: 4640128040404819396}
   leaderboardButton: {fileID: 4642015247718319763}
   settingsButton: {fileID: 502135044}
-  loginButton: {fileID: 1903615751}
+  loginButton: {fileID: 0}
   userPanel: {fileID: 1211542702}
   leaderboardPanel: {fileID: 1992243421}
   settingsPanel: {fileID: 1026285592}
@@ -7502,17 +7502,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 0
---- !u!114 &1903615751 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7514847301314583732, guid: bd46c0a6a81ae5c42842c3178b8278c6, type: 3}
-  m_PrefabInstance: {fileID: 1835505242}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1918431072
 GameObject:
   m_ObjectHideFlags: 0
@@ -8360,7 +8349,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2069711322}
         m_TargetAssemblyTypeName: SceneTransition, Assembly-CSharp
-        m_MethodName: Lesson_Select
+        m_MethodName: Robot_Select_Lesson
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

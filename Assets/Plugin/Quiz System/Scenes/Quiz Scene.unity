@@ -1306,7 +1306,7 @@ MonoBehaviour:
   m_text: 'Correct Answers:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d1b2bcd4c3d09b6409cbeac8f763f322, type: 2}
-  m_sharedMaterial: {fileID: -913331340909324774, guid: 9e0c7f149a2d42a41a1ab582a93a8b1b, type: 2}
+  m_sharedMaterial: {fileID: 3635770142374528782, guid: d1b2bcd4c3d09b6409cbeac8f763f322, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2702,7 +2702,7 @@ MonoBehaviour:
   m_text: 'Incorrect Answers:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d1b2bcd4c3d09b6409cbeac8f763f322, type: 2}
-  m_sharedMaterial: {fileID: -913331340909324774, guid: 9e0c7f149a2d42a41a1ab582a93a8b1b, type: 2}
+  m_sharedMaterial: {fileID: 3635770142374528782, guid: d1b2bcd4c3d09b6409cbeac8f763f322, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5247,7 +5247,7 @@ MonoBehaviour:
   m_text: 'Time Taken:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d1b2bcd4c3d09b6409cbeac8f763f322, type: 2}
-  m_sharedMaterial: {fileID: -913331340909324774, guid: 9e0c7f149a2d42a41a1ab582a93a8b1b, type: 2}
+  m_sharedMaterial: {fileID: 3635770142374528782, guid: d1b2bcd4c3d09b6409cbeac8f763f322, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5642,7 +5642,7 @@ MonoBehaviour:
   m_text: 'Percentage:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d1b2bcd4c3d09b6409cbeac8f763f322, type: 2}
-  m_sharedMaterial: {fileID: -913331340909324774, guid: 9e0c7f149a2d42a41a1ab582a93a8b1b, type: 2}
+  m_sharedMaterial: {fileID: 3635770142374528782, guid: d1b2bcd4c3d09b6409cbeac8f763f322, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

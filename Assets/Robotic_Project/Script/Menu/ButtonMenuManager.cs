@@ -4,148 +4,173 @@ using DG.Tweening;
 
 public class ButtonMenuManager : MonoBehaviour
 {
-    // Main Menu Buttons
+    [Header("Main Menu Buttons")]
     [SerializeField] private Button userButton;
     [SerializeField] private Button leaderboardButton;
     [SerializeField] private Button settingsButton;
-    [SerializeField] private Button loginButton; // Login Button
+    [SerializeField] private Button loginButton;
+    [SerializeField] private Button profileButton;
 
-    // Pop-up Panels
+    [Header("Panels")]
     [SerializeField] private GameObject userPanel;
     [SerializeField] private GameObject leaderboardPanel;
     [SerializeField] private GameObject settingsPanel;
-    [SerializeField] private GameObject loginPanel; // Login Panel
+    [SerializeField] private GameObject loginPanel;
+    [SerializeField] private GameObject profilePanel;
 
-    // Close Buttons for each panel
+    [Header("Close Buttons")]
     [SerializeField] private Button userCloseButton;
     [SerializeField] private Button leaderboardCloseButton;
     [SerializeField] private Button settingsCloseButton;
-    [SerializeField] private Button loginCloseButton; // Login Close Button
+    [SerializeField] private Button loginCloseButton;
+    [SerializeField] private Button profileCloseButton;
 
-    // Backdrop GameObject
+    [Header("Backdrop")]
     [SerializeField] private GameObject backdrop;
 
-    // Animation duration
+    [Header("Animation")]
     [SerializeField] private float animationDuration = 0.5f;
-
-    // Start scale for the pop-up animation
     [SerializeField] private Vector3 startScale = new Vector3(0.5f, 0.5f, 0.5f);
 
-    // Sound Effects
-    [SerializeField] private AudioClip buttonClickSound; // Sound for button clicks
-    [SerializeField] private float soundPitch = 1f; // Adjustable pitch for sound effects
+    [Header("Sound Effects")]
+    [SerializeField] private AudioClip buttonClickSound;
+    [SerializeField] private float soundPitch = 1f;
     private AudioSource audioSource;
 
     private void Start()
     {
-        // Initialize panels and backdrop to be inactive
-        DeactivateAllPanels();
-        backdrop.SetActive(false); // Ensure backdrop is deactivated initially
+        InitUI();
+        InitAudio();
+        InitListeners();
+    }
 
-        // Initialize AudioSource for sound effects
+    private void InitUI()
+    {
+        DeactivateAllPanels();
+        if (backdrop != null) backdrop.SetActive(false);
+    }
+
+    private void InitAudio()
+    {
         audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.playOnAwake = false;
-        audioSource.pitch = soundPitch; // Set initial pitch <button class="citation-flag" data-index="1">
+        audioSource.pitch = soundPitch;
+    }
 
-        // Add listeners to buttons with responsive sound effects
+    private void InitListeners()
+    {
         AddResponsiveButtonListener(userButton, () => ShowPanel(userPanel));
         AddResponsiveButtonListener(leaderboardButton, () => ShowPanel(leaderboardPanel));
         AddResponsiveButtonListener(settingsButton, () => ShowPanel(settingsPanel));
         AddResponsiveButtonListener(loginButton, () => ShowPanel(loginPanel));
+        AddResponsiveButtonListener(profileButton, () => ShowPanel(profilePanel));
 
-        // Add listeners to close buttons with responsive sound effects
         AddResponsiveButtonListener(userCloseButton, () => HidePanel(userPanel));
         AddResponsiveButtonListener(leaderboardCloseButton, () => HidePanel(leaderboardPanel));
         AddResponsiveButtonListener(settingsCloseButton, () => HidePanel(settingsPanel));
         AddResponsiveButtonListener(loginCloseButton, () => HidePanel(loginPanel));
+        AddResponsiveButtonListener(profileCloseButton, () => HidePanel(profilePanel));
     }
 
     private void AddResponsiveButtonListener(Button button, System.Action action)
     {
+        if (button == null) return;
         button.onClick.AddListener(() =>
         {
-            // Play the sound immediately when the button is clicked
-            if (buttonClickSound != null && audioSource != null)
-            {
-                audioSource.pitch = soundPitch; // Update pitch dynamically <button class="citation-flag" data-index="1">
-                audioSource.PlayOneShot(buttonClickSound); // Play the sound instantly
-            }
-
-            // Delay the action slightly to ensure the sound plays first
-            StartCoroutine(DelayedAction(action, 0.05f)); // Optional: Small delay for better responsiveness
+            PlayClickSound();
+            StartCoroutine(DelayedAction(action, 0.05f));
         });
+    }
+
+    private void PlayClickSound()
+    {
+        if (buttonClickSound != null && audioSource != null)
+        {
+            audioSource.pitch = soundPitch;
+            audioSource.PlayOneShot(buttonClickSound);
+        }
     }
 
     private System.Collections.IEnumerator DelayedAction(System.Action action, float delay)
     {
         yield return new WaitForSeconds(delay);
-        action.Invoke(); // Execute the original action after a slight delay
+        action?.Invoke();
     }
 
     private void DeactivateAllPanels()
     {
-        userPanel.SetActive(false);
-        leaderboardPanel.SetActive(false);
-        settingsPanel.SetActive(false);
-        loginPanel.SetActive(false);
+        userPanel?.SetActive(false);
+        leaderboardPanel?.SetActive(false);
+        settingsPanel?.SetActive(false);
+        loginPanel?.SetActive(false);
+        profilePanel?.SetActive(false);
     }
 
     private void ShowPanel(GameObject panel)
     {
-        // Deactivate all menu buttons
-        userButton.gameObject.SetActive(false);
-        leaderboardButton.gameObject.SetActive(false);
-        settingsButton.gameObject.SetActive(false);
-        loginButton.gameObject.SetActive(false);
+        if (panel == null) return;
 
-        // Activate the backdrop and fade it in
-        backdrop.SetActive(true);
-        Image backdropImage = backdrop.GetComponent<Image>();
-        if (backdropImage != null)
+        SetMenuButtonsActive(false);
+        if (backdrop != null)
         {
-            backdropImage.color = new Color(backdropImage.color.r, backdropImage.color.g, backdropImage.color.b, 0f); // Set alpha to 0
-            backdropImage.DOFade(0.75f, animationDuration).SetEase(Ease.Linear); // Fade in to 75% opacity
+            backdrop.SetActive(true);
+            FadeBackdrop(0.75f);
         }
 
-        // Activate the selected panel
         panel.SetActive(true);
-
-        // Play pop-up animation
-        RectTransform panelRect = panel.GetComponent<RectTransform>();
-        if (panelRect != null)
-        {
-            panelRect.localScale = startScale; // Start with a smaller scale
-            panelRect.DOScale(Vector3.one, animationDuration).SetEase(Ease.OutBack); // Scale up to normal size
-        }
+        AnimatePanelScale(panel.transform as RectTransform, startScale, Vector3.one, Ease.OutBack);
     }
 
     private void HidePanel(GameObject panel)
     {
-        // Play close animation for the panel
-        RectTransform panelRect = panel.GetComponent<RectTransform>();
-        if (panelRect != null)
+        if (panel == null || panel.transform == null) return;
+
+        var rect = panel.transform as RectTransform;
+        if (rect == null) return;
+
+        AnimatePanelScale(rect, Vector3.one, startScale, Ease.InBack, () =>
         {
-            panelRect.DOScale(startScale, animationDuration).SetEase(Ease.InBack).OnComplete(() =>
+            if (panel != null)
             {
-                // Deactivate the panel after animation
                 panel.SetActive(false);
+                SetMenuButtonsActive(true);
+                if (backdrop != null) FadeBackdrop(0f, () => backdrop.SetActive(false));
+            }
+        });
+    }
 
-                // Reactivate all menu buttons
-                userButton.gameObject.SetActive(true);
-                leaderboardButton.gameObject.SetActive(true);
-                settingsButton.gameObject.SetActive(true);
-                loginButton.gameObject.SetActive(true);
+    private void AnimatePanelScale(RectTransform rect, Vector3 from, Vector3 to, Ease ease, TweenCallback onComplete = null)
+    {
+        if (rect == null || rect.gameObject == null) return;
+        if (!rect.gameObject.activeInHierarchy) return;
 
-                // Fade out the backdrop
-                Image backdropImage = backdrop.GetComponent<Image>();
-                if (backdropImage != null)
-                {
-                    backdropImage.DOFade(0f, animationDuration).SetEase(Ease.Linear).OnComplete(() =>
-                    {
-                        backdrop.SetActive(false); // Deactivate backdrop after fading out
-                    });
-                }
-            });
-        }
+        DOTween.Kill(rect);
+        rect.localScale = from;
+
+        var tween = rect.DOScale(to, animationDuration).SetEase(ease);
+        if (onComplete != null)
+            tween.OnComplete(onComplete);
+    }
+
+    private void FadeBackdrop(float targetAlpha, TweenCallback onComplete = null)
+    {
+        if (backdrop == null) return;
+
+        Image backdropImage = backdrop.GetComponent<Image>();
+        if (backdropImage == null) return;
+
+        DOTween.Kill(backdropImage);
+        var tween = backdropImage.DOFade(targetAlpha, animationDuration).SetEase(Ease.Linear);
+        if (onComplete != null)
+            tween.OnComplete(onComplete);
+    }
+
+    private void SetMenuButtonsActive(bool isActive)
+    {
+        userButton?.gameObject.SetActive(isActive);
+        leaderboardButton?.gameObject.SetActive(isActive);
+        settingsButton?.gameObject.SetActive(isActive);
+        loginButton?.gameObject.SetActive(isActive);
+        profileButton?.gameObject.SetActive(isActive);
     }
 }

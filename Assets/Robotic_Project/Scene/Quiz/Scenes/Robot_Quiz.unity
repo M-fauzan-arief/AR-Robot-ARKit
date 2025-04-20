@@ -8124,6 +8124,7 @@ GameObject:
   - component: {fileID: 1789576575}
   - component: {fileID: 1789576574}
   - component: {fileID: 1789576576}
+  - component: {fileID: 1789576577}
   m_Layer: 0
   m_Name: QuizResultPanel(Clone)
   m_TagString: Untagged
@@ -8150,6 +8151,7 @@ MonoBehaviour:
   _percentageTMP: {fileID: 209232420}
   _nextButton: {fileID: 1961971073}
   _resultCanvas: {fileID: 1123545652}
+  _backToMainMenuButton: {fileID: 154335570}
   _finishMusic: {fileID: 8300000, guid: 976190157f98879499d183af2ced0e4d, type: 3}
 --- !u!4 &1789576575
 Transform:
@@ -8263,6 +8265,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1789576577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1789576573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5ba877f024200447815b2dcd32e76cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerProfileManager: {fileID: 0}
 --- !u!1 &1833765724
 GameObject:
   m_ObjectHideFlags: 0
@@ -9417,7 +9432,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2078833634
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9434,9 +9449,9 @@ RectTransform:
   - {fileID: 521432914}
   m_Father: {fileID: 157966268}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 300, y: -322}
   m_SizeDelta: {x: 600, y: 160}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &2078833635

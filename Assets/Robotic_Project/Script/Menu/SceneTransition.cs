@@ -149,6 +149,12 @@ public class SceneTransition : MonoBehaviour
         Debug.Log("Lesson Selection is loaded");
     }
 
+    public void Robot_Select_Lesson()
+    {
+        SceneManager.LoadScene("RobotSelect_lesson");
+        Debug.Log("Lesson Selection is loaded");
+    }
+
 
 
     public void ARCodeAPIRO()

@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using PlayFab;
 using PlayFab.ClientModels;
+using System.Collections.Generic;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -91,9 +92,41 @@ public class ScoreManager : MonoBehaviour
 
             ScoreCanvas.SetActive(true);
             playfabManager.SendLeaderboard(score);
+
             Debug.Log("You win! Score: " + score + " Stars: " + stars);
             PlaySuccessMusic();
+
+            UnlockFinishRobotAchievement();
         }
+    }
+
+    private void UnlockFinishRobotAchievement()
+    {
+        var request = new UpdatePlayerStatisticsRequest
+        {
+            Statistics = new List<StatisticUpdate>
+            {
+                new StatisticUpdate
+                {
+                    StatisticName = "finish_robot", // Must match your PlayFab statistic ID
+                    Value = 1
+                }
+            }
+        };
+
+        PlayFabClientAPI.UpdatePlayerStatistics(request, result =>
+        {
+            Debug.Log("Achievement 'finish_robot' unlocked successfully.");
+
+            if (AchievementManager.Instance != null)
+            {
+                AchievementManager.Instance.LoadAchievementsFromPlayFab();
+            }
+        },
+        error =>
+        {
+            Debug.LogError("Failed to unlock 'finish_robot': " + error.GenerateErrorReport());
+        });
     }
 
     private void PlaySuccessMusic()
@@ -105,7 +138,7 @@ public class ScoreManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Success music or AudioSource is missing!");
+            Debug.LogWarning("Success music or AudioSource is missing.");
         }
     }
 }
