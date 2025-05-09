@@ -65,6 +65,20 @@ public class MQTT_Client : MonoBehaviour
             Debug.LogError("MQTT client is not connected. Cannot publish message.");
         }
     }
+public void PublishGrabStatus(bool isHolding)
+{
+    if (client.IsConnected)
+    {
+        string topic = "/robot/Dobot/gripperStatus"; // You can adjust the topic as needed
+        string message = JsonUtility.ToJson(new { status = isHolding ? "True" : "False" });
+        client.Publish(topic, Encoding.UTF8.GetBytes(message), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
+    }
+    else
+    {
+        Debug.LogError("MQTT client is not connected. Cannot publish grab status.");
+    }
+}
+
 
     private void OnDestroy()
     {

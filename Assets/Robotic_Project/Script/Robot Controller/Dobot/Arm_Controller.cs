@@ -22,6 +22,7 @@ public class RobotMessage
 {
     public string nodeID, moveType;
     public DataDobot data;
+    public bool gripperStatus;
     public long unixtime;
 }
 
@@ -123,7 +124,7 @@ public class Arm_Controller : MonoBehaviour
         UpdateJointRotations();
     }
 
-    private void SendJointValues()
+    public void SendJointValues()
     {
         if (!mqttClient.IsConnected())
         {
@@ -131,11 +132,13 @@ public class Arm_Controller : MonoBehaviour
             return;
         }
 
+        /*
         if (lastJ1ZRot == J1ZRot && lastJ2XRot == J2XRot && lastJ3XRot == J3XRot && lastJ4ZRot == J4ZRot)
         {
             Debug.Log("Duplicate joint values detected. Skipping message.");
             return;
         }
+        */
 
         var endEffector = new EndEffectorDobot
         {
@@ -153,17 +156,20 @@ public class Arm_Controller : MonoBehaviour
             endEffector = endEffector
         };
 
+        // Create a new RobotMessage and include the gripper status
         var robotMessage = new RobotMessage
         {
             nodeID = "dobot-l-01",
             moveType = "joint",
             data = data,
+            gripperStatus = endEffectorEnabled,  // Pass the gripper status
             unixtime = GetUnixTimestamp()
         };
 
         mqttClient.PublishJointValues(robotMessage);
         UpdateLastJointValues();
     }
+
 
     private long GetUnixTimestamp() => (long)(System.DateTime.UtcNow - new System.DateTime(1970, 1, 1).ToUniversalTime()).TotalSeconds;
 
