@@ -4,6 +4,8 @@ using TMPro;
 
 public class ClawController : MonoBehaviour
 {
+    public static ClawController Instance { get; private set; }
+
     public Button grabButton;
     public Transform snapPosition;
     public TextMeshProUGUI buttonText;
@@ -15,6 +17,11 @@ public class ClawController : MonoBehaviour
 
     private Arm_Controller armController;
     private MQTT_Client mqttClient;
+
+    void Awake()
+    {
+        Instance = this;
+    }
 
     void Start()
     {
@@ -62,21 +69,17 @@ public class ClawController : MonoBehaviour
             GrabObject();
         }
 
-        // Update gripper state in Arm_Controller
         if (armController != null)
         {
-            armController.SetEndEffectorState(isHolding); // Update gripper state
-            armController.SendJointValues(); // Send updated joint and gripper data
+            armController.SetEndEffectorState(isHolding);
+            armController.SendJointValues();
         }
     }
-
-
 
     private void GrabObject()
     {
         isHolding = true;
 
-        // If object is in trigger, attach it
         if (grabbedObject != null && snapPosition != null)
         {
             grabbedObject.transform.SetParent(snapPosition);
@@ -91,22 +94,12 @@ public class ClawController : MonoBehaviour
 
             Debug.Log("Object grabbed: " + grabbedObject.name);
         }
-        else
-        {
-            Debug.Log("Grabbed (no object).");
-        }
 
         if (buttonText != null)
         {
             buttonText.text = "RELEASE";
         }
 
-        if (armController != null)
-        {
-            armController.SetEndEffectorState(isHolding);
-        }
-
-        // Sending the MQTT message is already handled inside PublishGrabStatus
         mqttClient.PublishGrabStatus(true);
     }
 
@@ -127,26 +120,12 @@ public class ClawController : MonoBehaviour
             Debug.Log("Object released: " + grabbedObject.name);
             grabbedObject = null;
         }
-        else
-        {
-            Debug.Log("Released (no object).");
-        }
 
         if (buttonText != null)
         {
             buttonText.text = "GRAB";
         }
 
-        if (armController != null)
-        {
-            armController.SetEndEffectorState(isHolding);
-        }
-
-        // Sending the MQTT message is already handled inside PublishGrabStatus
         mqttClient.PublishGrabStatus(false);
-        armController.SetEndEffectorState(isHolding);
-        armController.SendJointValues();
-
     }
-
 }

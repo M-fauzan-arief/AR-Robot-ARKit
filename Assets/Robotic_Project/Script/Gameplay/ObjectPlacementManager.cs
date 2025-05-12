@@ -4,25 +4,23 @@ using System.Collections.Generic;
 
 public class ObjectPlacementManager : MonoBehaviour
 {
-    public GameObject assignedObject;      // The correct object for this trigger
-    public Transform target;               // Target position for the assigned object
-    public TextMeshProUGUI feedbackText;   // UI Text for feedback
-    public ScoreManager scoreManager;      // Reference to ScoreManager script
-    public int objectPlaced = 0;
+    public GameObject assignedObject;
+    public Transform target;
+    public TextMeshProUGUI feedbackText;
+    public ScoreManager scoreManager;
 
     [Header("Audio Settings")]
-    [SerializeField] private AudioClip correctSound; // Sound for correct placement
-    [SerializeField] private AudioClip wrongSound;   // Sound for incorrect placement
-    private AudioSource audioSource;                // AudioSource for playing sounds
+    [SerializeField] private AudioClip correctSound;
+    [SerializeField] private AudioClip wrongSound;
+    private AudioSource audioSource;
 
     private Dictionary<GameObject, bool> lockedObjects = new Dictionary<GameObject, bool>();
 
     private void Start()
     {
         feedbackText.text = "";
-        scoreManager = FindObjectOfType<ScoreManager>(); // Find ScoreManager script in the scene
+        scoreManager = FindObjectOfType<ScoreManager>();
 
-        // Ensure AudioSource exists
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
         {
@@ -35,27 +33,35 @@ public class ObjectPlacementManager : MonoBehaviour
     {
         if (other.gameObject == assignedObject)
         {
-            // Correct object entered the trigger
+            // Check if already placed
+            if (IsObjectLocked(assignedObject))
+            {
+                feedbackText.text = assignedObject.name + " has already been placed!";
+                Debug.Log(assignedObject.name + " has already been placed!");
+                return;
+            }
+
+            // Check if still being held
+            if (ClawController.Instance != null && ClawController.Instance.grabbedObject == assignedObject)
+            {
+                feedbackText.text = assignedObject.name + " is still being held!";
+                Debug.Log(assignedObject.name + " is still being held!");
+                return;
+            }
+
+            // Valid placement
             PlaySound(correctSound);
-            TeleportAndColorObject(other.gameObject, target.position, Color.green);
+            TeleportAndColorObject(assignedObject, target.position, Color.green);
             feedbackText.text = assignedObject.name + " placed correctly!";
             Debug.Log(assignedObject.name + " placed correctly!");
-            scoreManager.UpdateScore(); // Notify ScoreManager to update score
+            scoreManager.UpdateScore();
             scoreManager.UpdateObjectPlace();
 
-            // Lock the object so it can't be grabbed again
-            if (!lockedObjects.ContainsKey(other.gameObject))
-            {
-                lockedObjects.Add(other.gameObject, true);
-            }
-            else
-            {
-                lockedObjects[other.gameObject] = true;
-            }
+            lockedObjects[assignedObject] = true;
         }
         else
         {
-            // Incorrect object entered the trigger
+            // Incorrect object
             PlaySound(wrongSound);
             TeleportAndColorObject(other.gameObject, target.position, Color.red);
             feedbackText.text = other.gameObject.name + " placed incorrectly!";
@@ -83,7 +89,6 @@ public class ObjectPlacementManager : MonoBehaviour
         }
     }
 
-    // Public method to check lock status
     public bool IsObjectLocked(GameObject obj)
     {
         return lockedObjects.ContainsKey(obj) && lockedObjects[obj];
