@@ -148,7 +148,7 @@ public class Arm_Controller : MonoBehaviour
 
         var data = new DataDobot
         {
-            j1 = J1ZRot.ToString(),
+            j1 = (-J1ZRot).ToString(),
             j2 = J2XRot.ToString(),
             j3 = J3XRot.ToString(),
             j4 = J4ZRot.ToString(),
