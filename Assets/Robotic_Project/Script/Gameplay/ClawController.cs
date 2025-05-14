@@ -7,6 +7,7 @@ public class ClawController : MonoBehaviour
     public Button grabButton;
     public Transform snapPosition;
     public TextMeshProUGUI buttonText;
+    public GripperCollider gripperCollider;
 
     [HideInInspector]
     public GameObject grabbedObject = null;
@@ -30,22 +31,10 @@ public class ClawController : MonoBehaviour
         {
             buttonText.text = "GRAB";
         }
-    }
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Grabbable") && !isHolding)
+        if (gripperCollider == null)
         {
-            grabbedObject = other.gameObject;
-            Debug.Log("Grabbable object entered: " + grabbedObject.name);
-        }
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        if (grabbedObject != null && other.gameObject == grabbedObject && !isHolding)
-        {
-            grabbedObject = null;
+            Debug.LogWarning("GripperCollider reference not assigned in ClawController.");
         }
     }
 
@@ -59,24 +48,25 @@ public class ClawController : MonoBehaviour
         }
         else
         {
+            // Get current object from collider
+            if (gripperCollider != null)
+            {
+                grabbedObject = gripperCollider.currentGrabbable;
+            }
             GrabObject();
         }
 
-        // Update gripper state in Arm_Controller
         if (armController != null)
         {
-            armController.SetEndEffectorState(isHolding); // Update gripper state
-            armController.SendJointValues(); // Send updated joint and gripper data
+            armController.SetEndEffectorState(isHolding);
+            armController.SendJointValues();
         }
     }
-
-
 
     private void GrabObject()
     {
         isHolding = true;
 
-        // If object is in trigger, attach it
         if (grabbedObject != null && snapPosition != null)
         {
             grabbedObject.transform.SetParent(snapPosition);
@@ -101,12 +91,6 @@ public class ClawController : MonoBehaviour
             buttonText.text = "RELEASE";
         }
 
-        if (armController != null)
-        {
-            armController.SetEndEffectorState(isHolding);
-        }
-
-        // Sending the MQTT message is already handled inside PublishGrabStatus
         mqttClient.PublishGrabStatus(true);
     }
 
@@ -137,16 +121,8 @@ public class ClawController : MonoBehaviour
             buttonText.text = "GRAB";
         }
 
-        if (armController != null)
-        {
-            armController.SetEndEffectorState(isHolding);
-        }
-
-        // Sending the MQTT message is already handled inside PublishGrabStatus
         mqttClient.PublishGrabStatus(false);
         armController.SetEndEffectorState(isHolding);
         armController.SendJointValues();
-
     }
-
 }
