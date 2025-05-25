@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
+using TMPro;
 
 [System.Serializable]
 public class EndEffectorDobot
@@ -35,10 +36,10 @@ public class Arm_Controller : MonoBehaviour
     public int J1_TurnRate = 1, J2_TurnRate = 1, J3_TurnRate = 1, J4_TurnRate = 1;
 
     [Header("Rotation Limits")]
-    public int J1ZRotMin = -135, J1ZRotMax = 135;  // J1 rotates on Z-axis
-    public int J2XRotMin = -8, J2XRotMax = 80;     // J2 rotates on X-axis
-    public int J3XRotMin = -7, J3XRotMax = 61;     // J3 rotates on X-axis
-    public int J4ZRotMin = -145, J4ZRotMax = 145;  // J4 rotates on Z-axis
+    public int J1ZRotMin = -135, J1ZRotMax = 135;
+    public int J2XRotMin = -8, J2XRotMax = 80;
+    public int J3XRotMin = -7, J3XRotMax = 61;
+    public int J4ZRotMin = -145, J4ZRotMax = 145;
 
     [Header("Buttons")]
     public Button J1_PlusButton, J1_MinusButton;
@@ -50,10 +51,14 @@ public class Arm_Controller : MonoBehaviour
     [Header("Reset Duration")]
     public float resetDuration = 2.0f;
 
+    [Header("UI Warning (TMP)")]
+    public TextMeshProUGUI warningText;
+
     private MQTT_Client mqttClient;
-    private int lastJ1ZRot, lastJ2XRot, lastJ3XRot, lastJ4ZRot;  // Adjusted rotations
+    private int lastJ1ZRot, lastJ2XRot, lastJ3XRot, lastJ4ZRot;
     public int J1ZRot, J2XRot, J3XRot, J4ZRot;
     private bool isButtonHeld, endEffectorEnabled;
+    private Coroutine warningCoroutine;
 
     private void Start()
     {
@@ -61,7 +66,6 @@ public class Arm_Controller : MonoBehaviour
 
         if (resetButton != null) resetButton.onClick.AddListener(StartReset);
 
-        // Assign button events for rotation adjustments
         AssignButtonEvents(J1_PlusButton, () => AdjustJointRotation(ref J1ZRot, J1_TurnRate, J1ZRotMin, J1ZRotMax));
         AssignButtonEvents(J1_MinusButton, () => AdjustJointRotation(ref J1ZRot, -J1_TurnRate, J1ZRotMin, J1ZRotMax));
         AssignButtonEvents(J2_PlusButton, () => AdjustJointRotation(ref J2XRot, J2_TurnRate, J2XRotMin, J2XRotMax));
@@ -70,15 +74,15 @@ public class Arm_Controller : MonoBehaviour
         AssignButtonEvents(J3_MinusButton, () => AdjustJointRotation(ref J3XRot, -J3_TurnRate, J3XRotMin, J3XRotMax));
         AssignButtonEvents(J4_PlusButton, () => AdjustJointRotation(ref J4ZRot, J4_TurnRate, J4ZRotMin, J4ZRotMax));
         AssignButtonEvents(J4_MinusButton, () => AdjustJointRotation(ref J4ZRot, -J4_TurnRate, J4ZRotMin, J4ZRotMax));
+
+        if (warningText != null)
+            warningText.gameObject.SetActive(false);
     }
 
     public void UpdateJointRotations()
     {
-        // Rotate J1 and J4 on the Z-axis
         J1.localEulerAngles = new Vector3(J1.localEulerAngles.x, J1.localEulerAngles.y, J1ZRot);
         J4.localEulerAngles = new Vector3(J4.localEulerAngles.x, J4.localEulerAngles.y, J4ZRot);
-
-        // Rotate J2 and J3 on the X-axis
         J2.localEulerAngles = new Vector3(J2XRot, J2.localEulerAngles.y, J2.localEulerAngles.z);
         J3.localEulerAngles = new Vector3(J3XRot, J3.localEulerAngles.y, J3.localEulerAngles.z);
     }
@@ -120,7 +124,20 @@ public class Arm_Controller : MonoBehaviour
 
     private void AdjustJointRotation(ref int jointRotation, int turnRate, int minRot, int maxRot)
     {
-        jointRotation = Mathf.Clamp(jointRotation + turnRate, minRot, maxRot);
+        int newRotation = jointRotation + turnRate;
+
+        if (newRotation < minRot)
+        {
+            ShowWarning("Reached minimum limit of joint!");
+            newRotation = minRot;
+        }
+        else if (newRotation > maxRot)
+        {
+            ShowWarning("Reached maximum limit of joint!");
+            newRotation = maxRot;
+        }
+
+        jointRotation = newRotation;
         UpdateJointRotations();
     }
 
@@ -129,16 +146,9 @@ public class Arm_Controller : MonoBehaviour
         if (!mqttClient.IsConnected())
         {
             Debug.LogError("MQTT client is not connected. Cannot send joint values.");
+            ShowWarning("MQTT not connected!");
             return;
         }
-
-        /*
-        if (lastJ1ZRot == J1ZRot && lastJ2XRot == J2XRot && lastJ3XRot == J3XRot && lastJ4ZRot == J4ZRot)
-        {
-            Debug.Log("Duplicate joint values detected. Skipping message.");
-            return;
-        }
-        */
 
         var endEffector = new EndEffectorDobot
         {
@@ -156,20 +166,18 @@ public class Arm_Controller : MonoBehaviour
             endEffector = endEffector
         };
 
-        // Create a new RobotMessage and include the gripper status
         var robotMessage = new RobotMessage
         {
             nodeID = "dobot-l-01",
             moveType = "joint",
             data = data,
-            gripperStatus = endEffectorEnabled,  // Pass the gripper status
+            gripperStatus = endEffectorEnabled,
             unixtime = GetUnixTimestamp()
         };
 
         mqttClient.PublishJointValues(robotMessage);
         UpdateLastJointValues();
     }
-
 
     private long GetUnixTimestamp() => (long)(System.DateTime.UtcNow - new System.DateTime(1970, 1, 1).ToUniversalTime()).TotalSeconds;
 
@@ -202,8 +210,28 @@ public class Arm_Controller : MonoBehaviour
         }
 
         J1ZRot = J2XRot = J3XRot = J4ZRot = 0;
+        Debug.Log("Reset button clicked. Starting joint reset...");
         UpdateJointRotations();
+        SendJointValues();
     }
 
     public void SetEndEffectorState(bool isEnabled) => endEffectorEnabled = isEnabled;
+
+    private void ShowWarning(string message, float duration = 2f)
+    {
+        if (warningText == null) return;
+
+        if (warningCoroutine != null)
+            StopCoroutine(warningCoroutine);
+
+        warningCoroutine = StartCoroutine(ShowWarningCoroutine(message, duration));
+    }
+
+    private IEnumerator ShowWarningCoroutine(string message, float duration)
+    {
+        warningText.text = message;
+        warningText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(duration);
+        warningText.gameObject.SetActive(false);
+    }
 }

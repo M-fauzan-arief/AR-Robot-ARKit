@@ -66,19 +66,15 @@ public class PlayFabManager : MonoBehaviour
         {
             Debug.Log("Player IS logged in.");
             if (loginPanel != null)
-            {
                 loginPanel.SetActive(false);
-            }
 
             PlayFabClientAPI.GetAccountInfo(new GetAccountInfoRequest(),
                 result =>
                 {
-                // Correct way to access AccountInfo and retrieve PlayerProfile through GetPlayerProfile
-                string playerId = result.AccountInfo.PlayFabId;
+                    string playerId = result.AccountInfo.PlayFabId;
                     Debug.Log("Session is valid. Player ID: " + playerId);
 
-                // Now, let's retrieve the player's profile information including DisplayName
-                var request = new GetPlayerProfileRequest { PlayFabId = playerId };
+                    var request = new GetPlayerProfileRequest { PlayFabId = playerId };
                     PlayFabClientAPI.GetPlayerProfile(request, profileResult =>
                     {
                         string playerName = profileResult.PlayerProfile?.DisplayName;
@@ -94,30 +90,22 @@ public class PlayFabManager : MonoBehaviour
                     {
                         Debug.LogError("Error retrieving player profile: " + error.GenerateErrorReport());
                     });
-
                 },
                 error =>
                 {
                     Debug.LogError("Session is invalid. Logging out...");
                     PlayFabSettings.staticPlayer.ForgetAllCredentials();
                     if (loginPanel != null)
-                    {
                         loginPanel.SetActive(true);
-                    }
                 });
         }
         else
         {
             Debug.Log("Player is NOT logged in.");
             if (loginPanel != null)
-            {
                 loginPanel.SetActive(true);
-            }
         }
     }
-
-
-
 
     public void Login()
     {
@@ -174,7 +162,13 @@ public class PlayFabManager : MonoBehaviour
     void OnDisplayNameUpdate(UpdateUserTitleDisplayNameResult result)
     {
         Debug.Log("Updated display name!");
-        leaderboardWindow.SetActive(true);
+
+        if (messageText != null)
+            messageText.text = $"Welcome, {nameInputField.text}!";
+
+        nameWindow.SetActive(false); // Close name input window
+        leaderboardWindow.SetActive(true); // Optional
+        LoadMenu(); // Automatically go to intro scene
     }
 
     public void Register()
@@ -192,7 +186,8 @@ public class PlayFabManager : MonoBehaviour
     {
         Debug.Log("Registration successful!");
         if (messageText != null)
-            messageText.text = "Registration successful! You can now log in.";
+            messageText.text = "Registration successful! Logging you in...";
+        Login(); // Automatically login after successful registration
     }
 
     public void ResetPassword()
@@ -315,7 +310,7 @@ public class PlayFabManager : MonoBehaviour
         LayoutRebuilder.ForceRebuildLayoutImmediate(rowsParent.GetComponent<RectTransform>());
     }
 
-    // Achievement system now handled by AchievementManager
+    // Achievement system handled by AchievementManager
     public void UnlockAchievement(string achievementId)
     {
         AchievementManager.Instance.UnlockAchievement(achievementId);
