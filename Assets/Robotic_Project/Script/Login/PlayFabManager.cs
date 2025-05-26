@@ -20,7 +20,7 @@ public class PlayFabManager : MonoBehaviour
 
     [Header("Login")]
     public GameObject loginPanel;
-    public TMP_InputField emailInputField;
+    public TMP_InputField usernameInputField;
     public TMP_InputField passwordInputField;
     public TMP_InputField nameInputField;
 
@@ -57,7 +57,7 @@ public class PlayFabManager : MonoBehaviour
         if (resetPasswordButton != null) resetPasswordButton.onClick.AddListener(ResetPassword);
 
         if (messageText != null)
-            messageText.text = "Please enter your email and password.";
+            messageText.text = "Please enter your username and password.";
     }
 
     void CheckLoginStatus()
@@ -109,9 +109,9 @@ public class PlayFabManager : MonoBehaviour
 
     public void Login()
     {
-        var request = new LoginWithEmailAddressRequest
+        var request = new LoginWithPlayFabRequest
         {
-            Email = emailInputField.text,
+            Username = usernameInputField.text,
             Password = passwordInputField.text,
             InfoRequestParameters = new GetPlayerCombinedInfoRequestParams
             {
@@ -119,7 +119,7 @@ public class PlayFabManager : MonoBehaviour
                 GetPlayerStatistics = true
             }
         };
-        PlayFabClientAPI.LoginWithEmailAddress(request, OnLoginSuccess, OnError);
+        PlayFabClientAPI.LoginWithPlayFab(request, OnLoginSuccess, OnError);
     }
 
     void OnLoginSuccess(LoginResult result)
@@ -175,7 +175,7 @@ public class PlayFabManager : MonoBehaviour
     {
         var request = new RegisterPlayFabUserRequest
         {
-            Email = emailInputField.text,
+            Username = usernameInputField.text,
             Password = passwordInputField.text,
             RequireBothUsernameAndEmail = false
         };
@@ -192,19 +192,8 @@ public class PlayFabManager : MonoBehaviour
 
     public void ResetPassword()
     {
-        var request = new SendAccountRecoveryEmailRequest
-        {
-            Email = emailInputField.text,
-            TitleId = PlayFabSettings.staticSettings.TitleId
-        };
-        PlayFabClientAPI.SendAccountRecoveryEmail(request, OnPasswordResetSuccess, OnError);
-    }
-
-    void OnPasswordResetSuccess(SendAccountRecoveryEmailResult result)
-    {
-        Debug.Log("Password reset email sent successfully!");
         if (messageText != null)
-            messageText.text = "Password reset email sent! Please check your inbox.";
+            messageText.text = "Password reset is only available for email-based accounts.";
     }
 
     void OnError(PlayFabError error)
@@ -310,7 +299,6 @@ public class PlayFabManager : MonoBehaviour
         LayoutRebuilder.ForceRebuildLayoutImmediate(rowsParent.GetComponent<RectTransform>());
     }
 
-    // Achievement system handled by AchievementManager
     public void UnlockAchievement(string achievementId)
     {
         AchievementManager.Instance.UnlockAchievement(achievementId);

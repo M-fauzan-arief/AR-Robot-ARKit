@@ -140,8 +140,47 @@ public class Arm_Controller : MonoBehaviour
         jointRotation = newRotation;
         UpdateJointRotations();
     }
+    public void sendResetValues()
+    {
+        if (!mqttClient.IsConnected())
+        {
+            Debug.LogError("MQTT client is not connected. Cannot send joint values.");
+            ShowWarning("MQTT not connected!");
+            return;
+        }
 
-    public void SendJointValues()
+        var endEffector = new EndEffectorDobot
+        {
+            type = "suck",
+            enable = (!endEffectorEnabled).ToString()
+        };
+
+        var data = new DataDobot
+        {
+            j1 = "0",
+            j2 = "0",
+            j3 = "0",
+            j4 = "0",
+            status = "True",
+            endEffector = endEffector
+        };
+
+        var robotMessage = new RobotMessage
+        {
+            nodeID = "dobot-l-01",
+            moveType = "joint",
+            data = data,
+            gripperStatus = endEffectorEnabled,
+            unixtime = GetUnixTimestamp()
+        };
+
+        mqttClient.PublishJointValues(robotMessage);
+        UpdateLastJointValues();
+
+    }
+
+
+        public void SendJointValues()
     {
         if (!mqttClient.IsConnected())
         {
@@ -189,13 +228,13 @@ public class Arm_Controller : MonoBehaviour
         lastJ4ZRot = J4ZRot;
     }
 
-    private void StartReset() => StartCoroutine(ResetJoints());
+    public void StartReset() => StartCoroutine(ResetJoints());
 
     private IEnumerator ResetJoints()
     {
         float elapsedTime = 0.0f;
         int[] initialRotations = { J1ZRot, J2XRot, J3XRot, J4ZRot };
-
+        sendResetValues();
         while (elapsedTime < resetDuration)
         {
             elapsedTime += Time.deltaTime;
@@ -212,7 +251,7 @@ public class Arm_Controller : MonoBehaviour
         J1ZRot = J2XRot = J3XRot = J4ZRot = 0;
         Debug.Log("Reset button clicked. Starting joint reset...");
         UpdateJointRotations();
-        SendJointValues();
+        
     }
 
     public void SetEndEffectorState(bool isEnabled) => endEffectorEnabled = isEnabled;
