@@ -54,6 +54,9 @@ public class Arm_Controller : MonoBehaviour
     [Header("UI Warning (TMP)")]
     public TextMeshProUGUI warningText;
 
+    [Header("Joint Value Display (TMP)")]
+    public TextMeshProUGUI j1Text, j2Text, j3Text, j4Text;
+
     private MQTT_Client mqttClient;
     private int lastJ1ZRot, lastJ2XRot, lastJ3XRot, lastJ4ZRot;
     public int J1ZRot, J2XRot, J3XRot, J4ZRot;
@@ -77,6 +80,8 @@ public class Arm_Controller : MonoBehaviour
 
         if (warningText != null)
             warningText.gameObject.SetActive(false);
+
+        UpdateJointValueTexts(); // Initialize UI
     }
 
     public void UpdateJointRotations()
@@ -85,6 +90,16 @@ public class Arm_Controller : MonoBehaviour
         J4.localEulerAngles = new Vector3(J4.localEulerAngles.x, J4.localEulerAngles.y, J4ZRot);
         J2.localEulerAngles = new Vector3(J2XRot, J2.localEulerAngles.y, J2.localEulerAngles.z);
         J3.localEulerAngles = new Vector3(J3XRot, J3.localEulerAngles.y, J3.localEulerAngles.z);
+
+        UpdateJointValueTexts();
+    }
+
+    private void UpdateJointValueTexts()
+    {
+        if (j1Text != null) j1Text.text = $"J1: {J1ZRot}";
+        if (j2Text != null) j2Text.text = $"J2: {J2XRot}";
+        if (j3Text != null) j3Text.text = $"J3: {J3XRot}";
+        if (j4Text != null) j4Text.text = $"J4: {J4ZRot}";
     }
 
     private void AssignButtonEvents(Button button, System.Action action)
@@ -140,6 +155,7 @@ public class Arm_Controller : MonoBehaviour
         jointRotation = newRotation;
         UpdateJointRotations();
     }
+
     public void sendResetValues()
     {
         if (!mqttClient.IsConnected())
@@ -176,11 +192,9 @@ public class Arm_Controller : MonoBehaviour
 
         mqttClient.PublishJointValues(robotMessage);
         UpdateLastJointValues();
-
     }
 
-
-        public void SendJointValues()
+    public void SendJointValues()
     {
         if (!mqttClient.IsConnected())
         {
@@ -251,7 +265,6 @@ public class Arm_Controller : MonoBehaviour
         J1ZRot = J2XRot = J3XRot = J4ZRot = 0;
         Debug.Log("Reset button clicked. Starting joint reset...");
         UpdateJointRotations();
-        
     }
 
     public void SetEndEffectorState(bool isEnabled) => endEffectorEnabled = isEnabled;

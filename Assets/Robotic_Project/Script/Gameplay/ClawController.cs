@@ -7,6 +7,7 @@ public class ClawController : MonoBehaviour
     public Button grabButton;
     public Transform snapPosition;
     public TextMeshProUGUI buttonText;
+    public TextMeshProUGUI gripStatusText; // <-- NEW: for showing grip status
     public GripperCollider gripperCollider;
 
     [HideInInspector]
@@ -30,6 +31,11 @@ public class ClawController : MonoBehaviour
         if (buttonText != null)
         {
             buttonText.text = "GRAB";
+        }
+
+        if (gripStatusText != null)
+        {
+            gripStatusText.text = "GRIP STATUS: RELEASED";
         }
 
         if (gripperCollider == null)
@@ -91,6 +97,11 @@ public class ClawController : MonoBehaviour
             buttonText.text = "RELEASE";
         }
 
+        if (gripStatusText != null)
+        {
+            gripStatusText.text = "GRIP STATUS: GRIPPING";
+        }
+
         mqttClient.PublishGrabStatus(true);
     }
 
@@ -119,6 +130,11 @@ public class ClawController : MonoBehaviour
         if (buttonText != null)
         {
             buttonText.text = "GRAB";
+        }
+
+        if (gripStatusText != null)
+        {
+            gripStatusText.text = "GRIP STATUS: RELEASED";
         }
 
         mqttClient.PublishGrabStatus(false);
