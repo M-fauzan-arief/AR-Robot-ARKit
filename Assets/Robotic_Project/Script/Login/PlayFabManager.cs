@@ -316,6 +316,3 @@ public class PlayFabManager : MonoBehaviour
         AchievementManager.Instance.UnlockAchievement(achievementId);
     }
 }
-
-
-ChatGPT
