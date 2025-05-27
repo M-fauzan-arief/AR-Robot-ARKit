@@ -2636,7 +2636,7 @@ MonoBehaviour:
   nameWindow: {fileID: 0}
   leaderboardWindow: {fileID: 0}
   loginPanel: {fileID: 0}
-  usernameInputField: {fileID: 0}
+  emailInputField: {fileID: 0}
   passwordInputField: {fileID: 0}
   nameInputField: {fileID: 0}
   loginButton: {fileID: 0}
@@ -7915,17 +7915,17 @@ MonoBehaviour:
   J1ZRotMin: -135
   J1ZRotMax: 135
   J2XRotMin: -8
-  J2XRotMax: 80
-  J3XRotMin: -7
-  J3XRotMax: 61
-  J4ZRotMin: -145
-  J4ZRotMax: 145
+  J2XRotMax: 65
+  J3XRotMin: -8
+  J3XRotMax: 53
+  J4ZRotMin: -100
+  J4ZRotMax: 100
   J1_PlusButton: {fileID: 1772674667}
   J1_MinusButton: {fileID: 635012932}
-  J2_PlusButton: {fileID: 1529530085}
-  J2_MinusButton: {fileID: 639826200}
-  J3_PlusButton: {fileID: 26286439}
-  J3_MinusButton: {fileID: 1322262632}
+  J2_PlusButton: {fileID: 639826200}
+  J2_MinusButton: {fileID: 1529530085}
+  J3_PlusButton: {fileID: 1322262632}
+  J3_MinusButton: {fileID: 26286439}
   J4_PlusButton: {fileID: 1281177025}
   J4_MinusButton: {fileID: 28379136}
   resetButton: {fileID: 1844063124}
@@ -9272,6 +9272,10 @@ PrefabInstance:
       propertyPath: m_fontSizeBase
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 7893318669389378791, guid: 7b771e29196b726488ef39edba600f77, type: 3}
+      propertyPath: m_Name
+      value: J3+
+      objectReference: {fileID: 0}
     - target: {fileID: 7897375792567879531, guid: 7b771e29196b726488ef39edba600f77, type: 3}
       propertyPath: m_TargetGraphic
       value: 
@@ -9283,6 +9287,10 @@ PrefabInstance:
     - target: {fileID: 8113135384668580493, guid: 7b771e29196b726488ef39edba600f77, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0.90001917
+      objectReference: {fileID: 0}
+    - target: {fileID: 8549205731988359046, guid: 7b771e29196b726488ef39edba600f77, type: 3}
+      propertyPath: m_Name
+      value: J3-
       objectReference: {fileID: 0}
     - target: {fileID: 9135406815878524560, guid: 7b771e29196b726488ef39edba600f77, type: 3}
       propertyPath: m_AnchoredPosition.x

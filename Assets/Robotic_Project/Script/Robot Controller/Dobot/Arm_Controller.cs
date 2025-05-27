@@ -4,6 +4,9 @@ using UnityEngine.EventSystems;
 using System.Collections;
 using TMPro;
 
+
+
+
 [System.Serializable]
 public class EndEffectorDobot
 {
@@ -61,11 +64,14 @@ public class Arm_Controller : MonoBehaviour
     private int lastJ1ZRot, lastJ2XRot, lastJ3XRot, lastJ4ZRot;
     public int J1ZRot, J2XRot, J3XRot, J4ZRot;
     private bool isButtonHeld, endEffectorEnabled;
+    private HapticFeedback hapticFeedback;
     private Coroutine warningCoroutine;
 
     private void Start()
     {
         mqttClient = GetComponent<MQTT_Client>();
+        hapticFeedback = GetComponent<HapticFeedback>();
+
 
         if (resetButton != null) resetButton.onClick.AddListener(StartReset);
 
@@ -140,20 +146,32 @@ public class Arm_Controller : MonoBehaviour
     private void AdjustJointRotation(ref int jointRotation, int turnRate, int minRot, int maxRot)
     {
         int newRotation = jointRotation + turnRate;
+        string jointName = GetJointNameByValue(jointRotation);
 
         if (newRotation < minRot)
         {
-            ShowWarning("Reached minimum limit of joint!");
+            ShowWarning($"{jointName} has reached its minimum limit ({minRot}°). Try rotating it in the opposite direction.");
+            hapticFeedback?.Vibrate(100);
             newRotation = minRot;
         }
         else if (newRotation > maxRot)
         {
-            ShowWarning("Reached maximum limit of joint!");
+            ShowWarning($"{jointName} has reached its maximum limit ({maxRot}°). Try rotating it in the opposite direction.");
             newRotation = maxRot;
         }
 
         jointRotation = newRotation;
         UpdateJointRotations();
+    }
+
+
+    private string GetJointNameByValue(int value)
+    {
+        if (value == J1ZRot) return "Joint 1 (Base)";
+        if (value == J2XRot) return "Joint 2 (Shoulder)";
+        if (value == J3XRot) return "Joint 3 (Elbow)";
+        if (value == J4ZRot) return "Joint 4 (Wrist)";
+        return "Joint";
     }
 
     public void sendResetValues()
