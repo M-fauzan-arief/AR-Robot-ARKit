@@ -1131,7 +1131,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -81.233246, y: 0, z: -77.29002, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -7924,8 +7924,8 @@ MonoBehaviour:
   J1_MinusButton: {fileID: 635012932}
   J2_PlusButton: {fileID: 639826200}
   J2_MinusButton: {fileID: 1529530085}
-  J3_PlusButton: {fileID: 1322262632}
-  J3_MinusButton: {fileID: 26286439}
+  J3_PlusButton: {fileID: 26286439}
+  J3_MinusButton: {fileID: 1322262632}
   J4_PlusButton: {fileID: 1281177025}
   J4_MinusButton: {fileID: 28379136}
   resetButton: {fileID: 1844063124}
