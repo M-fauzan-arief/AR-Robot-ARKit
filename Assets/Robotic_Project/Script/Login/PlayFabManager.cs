@@ -14,23 +14,20 @@ public class PlayFabManager : MonoBehaviour
     public GameObject rowPrefab;
     public Transform rowsParent;
 
-    [Header("Username")]
+    [Header("Username System")]
     public GameObject nameWindow;
     public GameObject leaderboardWindow;
 
     [Header("Login")]
     public GameObject loginPanel;
-    public TMP_InputField emailInputField;
+    public TMP_InputField usernameInputField;
     public TMP_InputField passwordInputField;
     public TMP_InputField nameInputField;
 
     public Button loginButton;
     public Button registerButton;
-    public Button resetPasswordButton;
 
     public TextMeshProUGUI messageText;
-    public TextMeshProUGUI PlayerID;
-    public TextMeshProUGUI Username;
 
     private string playerID;
     private string playerName;
@@ -52,12 +49,11 @@ public class PlayFabManager : MonoBehaviour
     {
         CheckLoginStatus();
 
-        if (loginButton != null) loginButton.onClick.AddListener(Login);
-        if (registerButton != null) registerButton.onClick.AddListener(Register);
-        if (resetPasswordButton != null) resetPasswordButton.onClick.AddListener(ResetPassword);
+        if (loginButton != null) loginButton.onClick.AddListener(LoginWithUsernameOnly);
+        if (registerButton != null) registerButton.onClick.AddListener(RegisterWithUsernameOnly);
 
         if (messageText != null)
-            messageText.text = "Please enter your email and password.";
+            messageText.text = "Please enter your username and password.";
     }
 
     void CheckLoginStatus()
@@ -65,8 +61,7 @@ public class PlayFabManager : MonoBehaviour
         if (PlayFabSettings.staticPlayer != null && PlayFabSettings.staticPlayer.IsClientLoggedIn())
         {
             Debug.Log("Player IS logged in.");
-            if (loginPanel != null)
-                loginPanel.SetActive(false);
+            loginPanel.SetActive(false);
 
             PlayFabClientAPI.GetAccountInfo(new GetAccountInfoRequest(),
                 result =>
@@ -95,23 +90,21 @@ public class PlayFabManager : MonoBehaviour
                 {
                     Debug.LogError("Session is invalid. Logging out...");
                     PlayFabSettings.staticPlayer.ForgetAllCredentials();
-                    if (loginPanel != null)
-                        loginPanel.SetActive(true);
+                    loginPanel.SetActive(true);
                 });
         }
         else
         {
             Debug.Log("Player is NOT logged in.");
-            if (loginPanel != null)
-                loginPanel.SetActive(true);
+            loginPanel.SetActive(true);
         }
     }
 
-    public void Login()
+    public void LoginWithUsernameOnly()
     {
-        var request = new LoginWithEmailAddressRequest
+        var request = new LoginWithPlayFabRequest
         {
-            Email = emailInputField.text,
+            Username = usernameInputField.text,
             Password = passwordInputField.text,
             InfoRequestParameters = new GetPlayerCombinedInfoRequestParams
             {
@@ -119,7 +112,7 @@ public class PlayFabManager : MonoBehaviour
                 GetPlayerStatistics = true
             }
         };
-        PlayFabClientAPI.LoginWithEmailAddress(request, OnLoginSuccess, OnError);
+        PlayFabClientAPI.LoginWithPlayFab(request, OnLoginSuccess, OnError);
     }
 
     void OnLoginSuccess(LoginResult result)
@@ -133,12 +126,12 @@ public class PlayFabManager : MonoBehaviour
         {
             nameWindow.SetActive(true);
             if (messageText != null)
-                messageText.text = "Login successful! Please set your username.";
+                messageText.text = $"Login successful!\nYour Player ID is: {playerID}\nPlease set your display name.";
         }
         else
         {
             if (messageText != null)
-                messageText.text = $"Login successful! Welcome, {playerName}.";
+                messageText.text = $"Login successful!\nWelcome, {playerName}!\nYour Player ID is: {playerID}";
             LoadMenu();
         }
 
@@ -163,19 +156,21 @@ public class PlayFabManager : MonoBehaviour
     {
         Debug.Log("Updated display name!");
 
-        if (messageText != null)
-            messageText.text = $"Welcome, {nameInputField.text}!";
+        playerName = nameInputField.text;
 
-        nameWindow.SetActive(false); // Close name input window
-        leaderboardWindow.SetActive(true); // Optional
-        LoadMenu(); // Automatically go to intro scene
+        if (messageText != null)
+            messageText.text = $"Welcome, {playerName}!\nYour Player ID is: {playerID}";
+
+        nameWindow.SetActive(false);
+        leaderboardWindow.SetActive(true);
+        LoadMenu();
     }
 
-    public void Register()
+    public void RegisterWithUsernameOnly()
     {
         var request = new RegisterPlayFabUserRequest
         {
-            Email = emailInputField.text,
+            Username = usernameInputField.text,
             Password = passwordInputField.text,
             RequireBothUsernameAndEmail = false
         };
@@ -185,26 +180,26 @@ public class PlayFabManager : MonoBehaviour
     void OnRegisterSuccess(RegisterPlayFabUserResult result)
     {
         Debug.Log("Registration successful!");
-        if (messageText != null)
-            messageText.text = "Registration successful! Logging you in...";
-        Login(); // Automatically login after successful registration
-    }
 
-    public void ResetPassword()
-    {
-        var request = new SendAccountRecoveryEmailRequest
+        // Automatically set display name to username
+        var displayNameRequest = new UpdateUserTitleDisplayNameRequest
         {
-            Email = emailInputField.text,
-            TitleId = PlayFabSettings.staticSettings.TitleId
+            DisplayName = usernameInputField.text
         };
-        PlayFabClientAPI.SendAccountRecoveryEmail(request, OnPasswordResetSuccess, OnError);
-    }
+        PlayFabClientAPI.UpdateUserTitleDisplayName(displayNameRequest, updateResult =>
+        {
+            Debug.Log("Display name set to username.");
+            if (messageText != null)
+                messageText.text = "Registration complete! Logging you in...";
 
-    void OnPasswordResetSuccess(SendAccountRecoveryEmailResult result)
-    {
-        Debug.Log("Password reset email sent successfully!");
-        if (messageText != null)
-            messageText.text = "Password reset email sent! Please check your inbox.";
+            // Proceed to login
+            LoginWithUsernameOnly();
+        }, error =>
+        {
+            Debug.LogError("Failed to set display name: " + error.GenerateErrorReport());
+            if (messageText != null)
+                messageText.text = "Registration succeeded, but setting display name failed.";
+        });
     }
 
     void OnError(PlayFabError error)
@@ -310,7 +305,6 @@ public class PlayFabManager : MonoBehaviour
         LayoutRebuilder.ForceRebuildLayoutImmediate(rowsParent.GetComponent<RectTransform>());
     }
 
-    // Achievement system handled by AchievementManager
     public void UnlockAchievement(string achievementId)
     {
         AchievementManager.Instance.UnlockAchievement(achievementId);

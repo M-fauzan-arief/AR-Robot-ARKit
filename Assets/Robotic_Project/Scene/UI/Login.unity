@@ -3487,7 +3487,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Email
+  m_text: Username
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 797405dc4ec44dc4b922b9211bd673c4, type: 2}
   m_sharedMaterial: {fileID: 4882552448965951351, guid: 797405dc4ec44dc4b922b9211bd673c4, type: 2}
@@ -4477,7 +4477,7 @@ GameObject:
   - component: {fileID: 1134305145}
   - component: {fileID: 1134305144}
   m_Layer: 5
-  m_Name: Email
+  m_Name: Username
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6446,12 +6446,11 @@ MonoBehaviour:
   nameWindow: {fileID: 651686543}
   leaderboardWindow: {fileID: 4452265186086604650}
   loginPanel: {fileID: 452440360}
-  emailInputField: {fileID: 1134305144}
+  usernameInputField: {fileID: 1134305144}
   passwordInputField: {fileID: 130002527}
   nameInputField: {fileID: 2010663127}
   loginButton: {fileID: 426747247}
   registerButton: {fileID: 815784768}
-  resetPasswordButton: {fileID: 1215819491}
   messageText: {fileID: 1588279324}
 --- !u!114 &1805965577
 MonoBehaviour:
