@@ -6447,10 +6447,8 @@ MonoBehaviour:
   leaderboardWindow: {fileID: 4452265186086604650}
   loginPanel: {fileID: 452440360}
   usernameInputField: {fileID: 1134305144}
-  passwordInputField: {fileID: 130002527}
   nameInputField: {fileID: 2010663127}
-  loginButton: {fileID: 426747247}
-  registerButton: {fileID: 815784768}
+  startButton: {fileID: 426747247}
   messageText: {fileID: 1588279324}
 --- !u!114 &1805965577
 MonoBehaviour:

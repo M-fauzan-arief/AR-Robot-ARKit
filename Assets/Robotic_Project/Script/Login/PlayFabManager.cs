@@ -21,12 +21,9 @@ public class PlayFabManager : MonoBehaviour
     [Header("Login")]
     public GameObject loginPanel;
     public TMP_InputField usernameInputField;
-    public TMP_InputField passwordInputField;
     public TMP_InputField nameInputField;
 
-    public Button loginButton;
-    public Button registerButton;
-
+    public Button startButton;
     public TextMeshProUGUI messageText;
 
     private string playerID;
@@ -48,90 +45,79 @@ public class PlayFabManager : MonoBehaviour
     void Start()
     {
         CheckLoginStatus();
-
-        if (loginButton != null) loginButton.onClick.AddListener(LoginWithUsernameOnly);
-        if (registerButton != null) registerButton.onClick.AddListener(RegisterWithUsernameOnly);
-
-        if (messageText != null)
-            messageText.text = "Please enter your username and password.";
+        if (startButton != null) startButton.onClick.AddListener(LoginOrRegisterWithCustomID);
+        if (messageText != null) messageText.text = "Please enter your username.";
     }
 
     void CheckLoginStatus()
     {
         if (PlayFabSettings.staticPlayer != null && PlayFabSettings.staticPlayer.IsClientLoggedIn())
         {
-            Debug.Log("Player IS logged in.");
             loginPanel.SetActive(false);
-
             PlayFabClientAPI.GetAccountInfo(new GetAccountInfoRequest(),
                 result =>
                 {
                     string playerId = result.AccountInfo.PlayFabId;
-                    Debug.Log("Session is valid. Player ID: " + playerId);
-
                     var request = new GetPlayerProfileRequest { PlayFabId = playerId };
                     PlayFabClientAPI.GetPlayerProfile(request, profileResult =>
                     {
                         string playerName = profileResult.PlayerProfile?.DisplayName;
-                        if (!string.IsNullOrEmpty(playerName))
-                        {
-                            Debug.Log("Player name: " + playerName);
-                        }
-                        else
-                        {
-                            Debug.LogWarning("DisplayName is empty.");
-                        }
-                    }, error =>
-                    {
-                        Debug.LogError("Error retrieving player profile: " + error.GenerateErrorReport());
-                    });
+                        Debug.Log("Player name: " + playerName);
+                    }, error => Debug.LogError("Profile error: " + error.GenerateErrorReport()));
                 },
                 error =>
                 {
-                    Debug.LogError("Session is invalid. Logging out...");
+                    Debug.LogError("Session invalid. Logging out...");
                     PlayFabSettings.staticPlayer.ForgetAllCredentials();
                     loginPanel.SetActive(true);
                 });
         }
         else
         {
-            Debug.Log("Player is NOT logged in.");
             loginPanel.SetActive(true);
         }
     }
 
-    public void LoginWithUsernameOnly()
+    public void LoginOrRegisterWithCustomID()
     {
-        var request = new LoginWithPlayFabRequest
+        string customId = usernameInputField.text;
+        if (string.IsNullOrEmpty(customId))
         {
-            Username = usernameInputField.text,
-            Password = passwordInputField.text,
+            messageText.text = "Username is required.";
+            return;
+        }
+
+        var request = new LoginWithCustomIDRequest
+        {
+            CustomId = customId,
+            CreateAccount = true,
             InfoRequestParameters = new GetPlayerCombinedInfoRequestParams
             {
                 GetPlayerProfile = true,
                 GetPlayerStatistics = true
             }
         };
-        PlayFabClientAPI.LoginWithPlayFab(request, OnLoginSuccess, OnError);
+
+        PlayFabClientAPI.LoginWithCustomID(request, OnLoginSuccess_CustomID, OnError);
     }
 
-    void OnLoginSuccess(LoginResult result)
+    void OnLoginSuccess_CustomID(LoginResult result)
     {
-        Debug.Log("Login successful!");
-
         playerID = result.PlayFabId;
         playerName = result.InfoResultPayload?.PlayerProfile?.DisplayName;
 
         if (string.IsNullOrEmpty(playerName))
         {
-            nameWindow.SetActive(true);
-            if (messageText != null)
-                messageText.text = $"Login successful!\nYour Player ID is: {playerID}\nPlease set your display name.";
+            string newDisplayName = usernameInputField.text;
+            var request = new UpdateUserTitleDisplayNameRequest { DisplayName = newDisplayName };
+            PlayFabClientAPI.UpdateUserTitleDisplayName(request, displayNameResult =>
+            {
+                playerName = newDisplayName;
+                LoadMenu();
+            }, OnError);
         }
         else
         {
-            if (messageText != null)
-                messageText.text = $"Login successful!\nWelcome, {playerName}!\nYour Player ID is: {playerID}";
             LoadMenu();
         }
 
@@ -141,72 +127,6 @@ public class PlayFabManager : MonoBehaviour
     public void LoadMenu()
     {
         SceneManager.LoadScene("Intro");
-    }
-
-    public void SubmitNameButton()
-    {
-        var request = new UpdateUserTitleDisplayNameRequest
-        {
-            DisplayName = nameInputField.text,
-        };
-        PlayFabClientAPI.UpdateUserTitleDisplayName(request, OnDisplayNameUpdate, OnError);
-    }
-
-    void OnDisplayNameUpdate(UpdateUserTitleDisplayNameResult result)
-    {
-        Debug.Log("Updated display name!");
-
-        playerName = nameInputField.text;
-
-        if (messageText != null)
-            messageText.text = $"Welcome, {playerName}!\nYour Player ID is: {playerID}";
-
-        nameWindow.SetActive(false);
-        leaderboardWindow.SetActive(true);
-        LoadMenu();
-    }
-
-    public void RegisterWithUsernameOnly()
-    {
-        var request = new RegisterPlayFabUserRequest
-        {
-            Username = usernameInputField.text,
-            Password = passwordInputField.text,
-            RequireBothUsernameAndEmail = false
-        };
-        PlayFabClientAPI.RegisterPlayFabUser(request, OnRegisterSuccess, OnError);
-    }
-
-    void OnRegisterSuccess(RegisterPlayFabUserResult result)
-    {
-        Debug.Log("Registration successful!");
-
-        // Automatically set display name to username
-        var displayNameRequest = new UpdateUserTitleDisplayNameRequest
-        {
-            DisplayName = usernameInputField.text
-        };
-        PlayFabClientAPI.UpdateUserTitleDisplayName(displayNameRequest, updateResult =>
-        {
-            Debug.Log("Display name set to username.");
-            if (messageText != null)
-                messageText.text = "Registration complete! Logging you in...";
-
-            // Proceed to login
-            LoginWithUsernameOnly();
-        }, error =>
-        {
-            Debug.LogError("Failed to set display name: " + error.GenerateErrorReport());
-            if (messageText != null)
-                messageText.text = "Registration succeeded, but setting display name failed.";
-        });
-    }
-
-    void OnError(PlayFabError error)
-    {
-        Debug.LogError("Error: " + error.GenerateErrorReport());
-        if (messageText != null)
-            messageText.text = "Error: " + error.ErrorMessage;
     }
 
     public void SavePlayerStats(int level, int xp)
@@ -243,14 +163,11 @@ public class PlayFabManager : MonoBehaviour
 
         foreach (var stat in result.Statistics)
         {
-            if (stat.StatisticName == "Level")
-                level = stat.Value;
-            else if (stat.StatisticName == "XP")
-                xp = stat.Value;
+            if (stat.StatisticName == "Level") level = stat.Value;
+            else if (stat.StatisticName == "XP") xp = stat.Value;
         }
 
         Debug.Log($"Loaded player stats: Level = {level}, XP = {xp}");
-
         ExperienceManager.Instance.SetLevelAndXP(level, xp);
     }
 
@@ -277,23 +194,19 @@ public class PlayFabManager : MonoBehaviour
         {
             StatisticName = "QuizLeaderboard",
             StartPosition = 0,
-            MaxResultsCount = 10
+            MaxResultsCount = 5
         };
         PlayFabClientAPI.GetLeaderboard(request, OnLeaderboardGet, OnError);
     }
 
     void OnLeaderboardGet(GetLeaderboardResult result)
     {
-        foreach (Transform child in rowsParent)
-        {
-            Destroy(child.gameObject);
-        }
+        foreach (Transform child in rowsParent) Destroy(child.gameObject);
 
         foreach (var item in result.Leaderboard)
         {
             GameObject newRow = Instantiate(rowPrefab, rowsParent);
             TextMeshProUGUI[] textFields = newRow.GetComponentsInChildren<TextMeshProUGUI>(true);
-
             if (textFields.Length >= 3)
             {
                 textFields[0].text = (item.Position + 1).ToString();
@@ -308,5 +221,12 @@ public class PlayFabManager : MonoBehaviour
     public void UnlockAchievement(string achievementId)
     {
         AchievementManager.Instance.UnlockAchievement(achievementId);
+    }
+
+    void OnError(PlayFabError error)
+    {
+        Debug.LogError("Error: " + error.GenerateErrorReport());
+        if (messageText != null)
+            messageText.text = "Error: " + error.ErrorMessage;
     }
 }
