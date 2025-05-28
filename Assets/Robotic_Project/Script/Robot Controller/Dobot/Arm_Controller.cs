@@ -4,9 +4,6 @@ using UnityEngine.EventSystems;
 using System.Collections;
 using TMPro;
 
-
-
-
 [System.Serializable]
 public class EndEffectorDobot
 {
@@ -64,14 +61,11 @@ public class Arm_Controller : MonoBehaviour
     private int lastJ1ZRot, lastJ2XRot, lastJ3XRot, lastJ4ZRot;
     public int J1ZRot, J2XRot, J3XRot, J4ZRot;
     private bool isButtonHeld, endEffectorEnabled;
-    private HapticFeedback hapticFeedback;
     private Coroutine warningCoroutine;
 
     private void Start()
     {
         mqttClient = GetComponent<MQTT_Client>();
-        hapticFeedback = GetComponent<HapticFeedback>();
-
 
         if (resetButton != null) resetButton.onClick.AddListener(StartReset);
 
@@ -150,13 +144,12 @@ public class Arm_Controller : MonoBehaviour
 
         if (newRotation < minRot)
         {
-            ShowWarning($"{jointName} has reached its minimum limit ({minRot}°). Try rotating it in the opposite direction.");
-            hapticFeedback?.Vibrate(100);
+            ShowWarning($"{jointName} has reached its minimum limit ({minRot}Â°). Try rotating it in the opposite direction.");
             newRotation = minRot;
         }
         else if (newRotation > maxRot)
         {
-            ShowWarning($"{jointName} has reached its maximum limit ({maxRot}°). Try rotating it in the opposite direction.");
+            ShowWarning($"{jointName} has reached its maximum limit ({maxRot}Â°). Try rotating it in the opposite direction.");
             newRotation = maxRot;
         }
 
