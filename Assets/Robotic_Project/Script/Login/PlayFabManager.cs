@@ -46,7 +46,7 @@ public class PlayFabManager : MonoBehaviour
     {
         CheckLoginStatus();
         if (startButton != null) startButton.onClick.AddListener(LoginOrRegisterWithCustomID);
-        if (messageText != null) messageText.text = "Please enter your username.";
+        ShowMessage("Please enter your username.");
     }
 
     void CheckLoginStatus()
@@ -63,13 +63,18 @@ public class PlayFabManager : MonoBehaviour
                     {
                         string playerName = profileResult.PlayerProfile?.DisplayName;
                         Debug.Log("Player name: " + playerName);
-                    }, error => Debug.LogError("Profile error: " + error.GenerateErrorReport()));
+                    }, error =>
+                    {
+                        Debug.LogError("Profile error: " + error.GenerateErrorReport());
+                        ShowError("Failed to load profile.");
+                    });
                 },
                 error =>
                 {
                     Debug.LogError("Session invalid. Logging out...");
                     PlayFabSettings.staticPlayer.ForgetAllCredentials();
                     loginPanel.SetActive(true);
+                    ShowError("Session expired. Please log in again.");
                 });
         }
         else
@@ -80,12 +85,15 @@ public class PlayFabManager : MonoBehaviour
 
     public void LoginOrRegisterWithCustomID()
     {
-        string customId = usernameInputField.text;
+        string customId = usernameInputField.text.Trim();
+
         if (string.IsNullOrEmpty(customId))
         {
-            messageText.text = "Username is required.";
+            ShowError("Username is required.");
             return;
         }
+
+        ShowMessage("Logging in...");
 
         var request = new LoginWithCustomIDRequest
         {
@@ -108,16 +116,23 @@ public class PlayFabManager : MonoBehaviour
 
         if (string.IsNullOrEmpty(playerName))
         {
-            string newDisplayName = usernameInputField.text;
+            string newDisplayName = usernameInputField.text.Trim();
             var request = new UpdateUserTitleDisplayNameRequest { DisplayName = newDisplayName };
             PlayFabClientAPI.UpdateUserTitleDisplayName(request, displayNameResult =>
             {
                 playerName = newDisplayName;
+                ShowMessage("Login successful. Loading...");
                 LoadMenu();
-            }, OnError);
+            }, error =>
+            {
+                Debug.LogError("Display name update failed: " + error.GenerateErrorReport());
+                ShowError("Login succeeded, but failed to set display name.");
+                LoadMenu();
+            });
         }
         else
         {
+            ShowMessage("Login successful. Loading...");
             LoadMenu();
         }
 
@@ -225,8 +240,25 @@ public class PlayFabManager : MonoBehaviour
 
     void OnError(PlayFabError error)
     {
-        Debug.LogError("Error: " + error.GenerateErrorReport());
+        Debug.LogError("PlayFab Error: " + error.GenerateErrorReport());
+        ShowError("Error: " + error.ErrorMessage);
+    }
+
+    void ShowMessage(string message)
+    {
         if (messageText != null)
-            messageText.text = "Error: " + error.ErrorMessage;
+        {
+            messageText.text = message;
+            messageText.color = Color.black;
+        }
+    }
+
+    void ShowError(string error)
+    {
+        if (messageText != null)
+        {
+            messageText.text = error;
+            messageText.color = Color.red;
+        }
     }
 }
